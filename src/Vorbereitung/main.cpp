@@ -48,12 +48,12 @@ int Time::getHun()
 
 void Time::setMin(int min_input)
 {
-   min = min_input;
+   min = min_input%60;
 }
 
 void Time::setSec(int sec_input)
 {
-   sec = sec_input;
+   sec = sec_input%60;
 }
 
 void Time::setHun(int hun_input)
