@@ -1,8 +1,9 @@
-// g++ -std=c++0x main.cpp time.cpp time.h
+// g++ -std=c++0x main.cpp
 
 #include <iostream>
 #include <stdio.h>
-//#include "time.h"
+#include <string>
+#include <sstream>
 using namespace std;
 
 class Time
@@ -16,7 +17,7 @@ class Time
     void setMin(int min_input);
     void setSec(int min_input);
     void setHun(int min_input);
-    void print();
+    string print();
  private:
     int min;
     int sec;
@@ -25,9 +26,9 @@ class Time
 
 Time::Time(int min_input, int sec_input, int hun_input)
 {
-	min = min_input;
-	sec = sec_input;
-	hun = (hun_input/10)*10;
+	min = min_input%60;
+	sec = sec_input%60;
+	hun = ((hun_input%100)/10)*10;
 }
 
 int Time::getMin()
@@ -57,11 +58,15 @@ void Time::setSec(int sec_input)
 
 void Time::setHun(int hun_input)
 {
-   hun = (hun_input/10)*10;
+   hun = ((hun_input%100)/10)*10;
 }
-void Time::print()
+
+string Time::print()
 {
-   cout << min << ":" << sec << ":" << hun << endl;
+   	std::ostringstream output;
+	output << min << ":" << sec << ":" << hun;
+	string returnvalue = output.str();
+	return returnvalue;
 }
 
 int main()
@@ -71,6 +76,6 @@ int main()
 	cin >> sec_input;
 	cin >> hun_input;
 	Time timeobject(min_input,sec_input,hun_input);
-	timeobject.print();
+	cout << timeobject.print() << endl;
 	return 0;
 }
