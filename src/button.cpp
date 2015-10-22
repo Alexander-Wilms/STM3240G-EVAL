@@ -9,7 +9,7 @@
 #include "stm324xg_eval.h"
 #include "stm324xg_eval_io.h"
 
-extern bool LED_is_ON;
+extern volatile bool LED_is_ON;
 
 /** @brief  This function handles External line0 interrupt request from KEY
  *

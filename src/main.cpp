@@ -16,7 +16,7 @@
 #include "button.h"
 #include "systick.h"
 
-bool LED_is_ON;
+bool volatile LED_is_ON;
 
 /** @brief main function, entry point of the application */
 int
