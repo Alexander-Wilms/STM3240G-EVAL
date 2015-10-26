@@ -19,7 +19,7 @@ volatile int count;
 extern "C" void
 EXTI15_10_IRQHandler (void)
 {
-	count = 1000;
+	count = 50;
   /* reset both EXTI I/O interrupt latches,
    * as both buttons share the same interrupt
    * and we don't know which one triggered */
