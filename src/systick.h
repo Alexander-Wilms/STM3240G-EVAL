@@ -9,4 +9,4 @@
 void SysTick_init( void);
 void busy_delay( unsigned time);
 extern volatile unsigned tickCount;
-
+extern volatile int mytimer;

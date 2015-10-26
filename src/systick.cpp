@@ -30,6 +30,8 @@ extern "C" void SysTick_Handler(void)
 	  // Update status
   	  BSP_LED_Off( LED2);
   }
+  mytimer++;
+
 }
 
 /** @brief SysTick initialization */

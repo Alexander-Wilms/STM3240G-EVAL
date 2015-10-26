@@ -11,12 +11,15 @@
 #include "stm324xg_eval_io.h"
 #include "stm324xg_eval_ts.h"
 #include "stm324xg_eval_lcd.h"
+#include <string>
+#include <sstream>
 
 #include "lcd.h"
 #include "button.h"
 #include "systick.h"
 
 bool volatile LED_is_ON;
+volatile int mytimer;
 
 /** @brief main function, entry point of the application */
 int
@@ -31,10 +34,22 @@ main (void)
   BSP_LED_Init (LED3);
   BSP_LED_On( LED3);
   lcd_init ();
-  lcd_write_line (0, "Hello LCD TEST");
+  const char * LCDstring = "HELLO LCD TEST";
+  lcd_write_line (0, (char *) LCDstring);
+  std::ostringstream output;
+  std::string outputstring;
+  const char * chararray;
+  mytimer = 0;
 
   while (true) // SUPER LOOP
     {
+	  output.str(std::string());
+	  output << "Time: " << mytimer;
+	  outputstring = "";
+	  outputstring = output.str();
+	  chararray = "";
+	  chararray = outputstring.c_str();
+	  lcd_write_line (1, (char *) chararray);
 	if( LED_is_ON)
 	  BSP_LED_On( LED1);
 	else
