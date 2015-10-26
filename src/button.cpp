@@ -11,7 +11,7 @@
 
 extern volatile bool LED_is_ON;
 volatile int count;
-
+volatile bool running = true;
 
 /** @brief  This function handles External line0 interrupt request from KEY
  *
@@ -27,6 +27,8 @@ EXTI15_10_IRQHandler (void)
   __HAL_GPIO_EXTI_CLEAR_IT( KEY_BUTTON_PIN);
   // Disable interrupts
   BSP_PB_Init (BUTTON_KEY, BUTTON_MODE_GPIO);
+  // Toggle state
+  running = !running;
   // Show status
   BSP_LED_On( LED2);
   // Toggle LED

@@ -17,6 +17,7 @@
 #include "lcd.h"
 #include "button.h"
 #include "systick.h"
+#include "timer.h"
 
 bool volatile LED_is_ON;
 volatile int mytimer;
@@ -36,23 +37,31 @@ main (void)
   lcd_init ();
   const char * LCDstring = "HELLO LCD TEST";
   lcd_write_line (0, (char *) LCDstring);
-  std::ostringstream output;
+  std::stringstream output;
   std::string outputstring;
   const char * chararray;
   mytimer = 0;
+  Timer mytimerobject(12,34,56);
+
 
   while (true) // SUPER LOOP
     {
-	  output.str(std::string());
-	  output << "Time: " << mytimer;
-	  outputstring = "";
-	  outputstring = output.str();
-	  chararray = "";
-	  chararray = outputstring.c_str();
-	  lcd_write_line (1, (char *) chararray);
-	if( LED_is_ON)
-	  BSP_LED_On( LED1);
-	else
-	  BSP_LED_Off( LED1);
+	  if(running)
+	  {
+		  output.str(std::string());
+		  mytimerobject.setMin(mytimer/1000/60);
+		  mytimerobject.setSec(mytimer/1000);
+		  mytimerobject.setHun(mytimer/10);
+		  output << "Time: " << mytimerobject.printtime();
+		  outputstring = "";
+		  outputstring = output.str();
+		  chararray = "";
+		  chararray = outputstring.c_str();
+		  lcd_write_line (1, (char *) chararray);
+	  }
+		if( LED_is_ON)
+		  BSP_LED_On( LED1);
+		else
+		  BSP_LED_Off( LED1);
     }
 }
