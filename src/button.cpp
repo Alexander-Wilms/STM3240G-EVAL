@@ -10,6 +10,7 @@
 #include "stm324xg_eval_io.h"
 
 extern volatile bool LED_is_ON;
+volatile int count;
 
 /** @brief  This function handles External line0 interrupt request from KEY
  *
@@ -18,10 +19,16 @@ extern volatile bool LED_is_ON;
 extern "C" void
 EXTI15_10_IRQHandler (void)
 {
+	count = 1000;
   /* reset both EXTI I/O interrupt latches,
    * as both buttons share the same interrupt
    * and we don't know which one triggered */
   __HAL_GPIO_EXTI_CLEAR_IT( KEY_BUTTON_PIN);
+  // Disable interrupts
+  BSP_PB_Init (BUTTON_KEY, BUTTON_MODE_GPIO);
+  // Show status
+  BSP_LED_On( LED2);
+  // Toggle LED
   LED_is_ON = ! LED_is_ON;
 }
 
@@ -41,6 +48,7 @@ void
 pushbutton_init (void)
 {
   /* Initialize USER Buttons with interrupt capability */
+	// Drücken führt zu Interrupt
   BSP_PB_Init (BUTTON_KEY, BUTTON_MODE_EXTI);
   BSP_PB_Init (BUTTON_WAKEUP, BUTTON_MODE_EXTI);
   BSP_PB_Init (BUTTON_TAMPER, BUTTON_MODE_EXTI);

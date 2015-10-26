@@ -27,8 +27,11 @@ main (void)
   SysTick_init ();
   pushbutton_init ();
   BSP_LED_Init (LED1);
+  // Test: leuchtet LED3?
+  BSP_LED_Init (LED3);
+  BSP_LED_On( LED3);
   lcd_init ();
-  lcd_write_line (0, "Hello LCD");
+  lcd_write_line (0, "Hello LCD TEST");
 
   while (true) // SUPER LOOP
     {

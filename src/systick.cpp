@@ -10,6 +10,8 @@
 #include "systick.h"
 #include "cmsis_device.h"
 #include "stm32f4xx_hal.h"
+#include "stm324xg_eval.h"
+#include "button.h"
 
 #define TICK_RATE_HZ 1000       //!< SysTick interrupt frequency
 
@@ -19,6 +21,15 @@ extern "C" void SysTick_Handler(void)
 #if defined(USE_HAL_DRIVER)
   HAL_IncTick();
 #endif
+  if(count != 0)
+	  count--;
+  else if (count == 0)
+  {
+	  // Disable ISR
+	  BSP_PB_Init (BUTTON_KEY, BUTTON_MODE_EXTI);
+	  // Update status
+  	  BSP_LED_Off( LED2);
+  }
 }
 
 /** @brief SysTick initialization */
