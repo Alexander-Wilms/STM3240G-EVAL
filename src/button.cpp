@@ -28,7 +28,14 @@ EXTI15_10_IRQHandler (void)
   // Disable interrupts
   BSP_PB_Init (BUTTON_KEY, BUTTON_MODE_GPIO);
   // Toggle state
-  running = !running;
+  //if(key==START_STOP)
+	  running = !running;
+  /*else if (key==RESET)
+  {
+	  mytimerobject.setMin(0);
+	  mytimerobject.setSec(0);
+	  mytimerobject.setHun(0);
+  }*/
   // Show status
   BSP_LED_On( LED2);
   // Toggle LED
