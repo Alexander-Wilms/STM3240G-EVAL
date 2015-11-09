@@ -8071,15 +8071,22 @@ Discarded input sections
  .text._Z9test_taskPv
                 0x00000000       0x34 ./src/main.o
  .text._Z9led1_taskPv
-                0x00000000       0x58 ./src/main.o
+                0x00000000       0x54 ./src/main.o
  .text._Z9led2_taskPv
-                0x00000000       0x58 ./src/main.o
+                0x00000000       0x54 ./src/main.o
+ .text._Z21led1_task_timeslicingPv
+                0x00000000       0x54 ./src/main.o
+ .text._Z21led2_task_timeslicingPv
+                0x00000000       0x54 ./src/main.o
+ .text._Z21led3_task_timeslicingPv
+                0x00000000       0x54 ./src/main.o
  .text._ZNSs12_S_constructIPcEES0_T_S1_RKSaIcESt20forward_iterator_tag
                 0x00000000       0x68 ./src/main.o
  .text._ZNSsC2IPcEET_S1_RKSaIcE
                 0x00000000       0x18 ./src/main.o
  .text._Z8lcd_taskPv
                 0x00000000      0x164 ./src/main.o
+ .bss.stuff     0x00000000        0x4 ./src/main.o
  .debug_macro   0x00000000      0x8f8 ./src/main.o
  .debug_macro   0x00000000       0x58 ./src/main.o
  .debug_macro   0x00000000       0x22 ./src/main.o
@@ -8977,8 +8984,6 @@ Discarded input sections
                 0x00000000       0x28 ./FreeRTOS/ARM_CM3_MPU/port.o
  .text.MPU_vTaskDelete
                 0x00000000       0x24 ./FreeRTOS/ARM_CM3_MPU/port.o
- .text.MPU_vTaskDelayUntil
-                0x00000000       0x28 ./FreeRTOS/ARM_CM3_MPU/port.o
  .text.MPU_vTaskDelay
                 0x00000000       0x24 ./FreeRTOS/ARM_CM3_MPU/port.o
  .text.MPU_uxTaskPriorityGet
@@ -16282,7 +16287,7 @@ END GROUP
                 0x2001fc00                __Main_Stack_Limit = (__stack - __Main_Stack_Size)
                 0x2001fc00                PROVIDE (_Main_Stack_Limit, __Main_Stack_Limit)
                 0x00000100                _Minimum_Stack_Size = 0x100
-                0x200001d0                PROVIDE (_Heap_Begin, _end_noinit)
+                0x200001cc                PROVIDE (_Heap_Begin, _end_noinit)
                 0x2001fc00                PROVIDE (_Heap_Limit, (__stack - __Main_Stack_Size))
                 0x00002000                _Privileged_Functions_Region_Size = 0x2000
                 0x08000000                __FLASH_segment_start__ = ORIGIN (FLASH)
@@ -16496,16 +16501,16 @@ privileged_functions
 
 .inits          0x08004000       0x30
                 0x08004000                __data_regions_array_start = .
-                0x08004000        0x4 LONG 0x8009200 LOADADDR (.data)
+                0x08004000        0x4 LONG 0x800924c LOADADDR (.data)
                 0x08004004        0x4 LONG 0x20000000 ADDR (.data)
                 0x08004008        0x4 LONG 0x200000bc (ADDR (.data) + SIZEOF (.data))
-                0x0800400c        0x4 LONG 0x8009200 LOADADDR (.data_CCMRAM)
+                0x0800400c        0x4 LONG 0x800924c LOADADDR (.data_CCMRAM)
                 0x08004010        0x4 LONG 0x10000000 ADDR (.data_CCMRAM)
                 0x08004014        0x4 LONG 0x10000000 (ADDR (.data_CCMRAM) + SIZEOF (.data_CCMRAM))
                 0x08004018                __data_regions_array_end = .
                 0x08004018                __bss_regions_array_start = .
                 0x08004018        0x4 LONG 0x200000bc ADDR (.bss)
-                0x0800401c        0x4 LONG 0x200001d0 (ADDR (.bss) + SIZEOF (.bss))
+                0x0800401c        0x4 LONG 0x200001cc (ADDR (.bss) + SIZEOF (.bss))
                 0x08004020        0x4 LONG 0x10000000 ADDR (.bss_CCMRAM)
                 0x08004024        0x4 LONG 0x10000000 (ADDR (.bss_CCMRAM) + SIZEOF (.bss_CCMRAM))
                 0x08004028                __bss_regions_array_end = .
@@ -16533,7 +16538,7 @@ privileged_functions
 .flashtext
  *(.flashtext .flashtext.*)
 
-.text           0x08004030     0x51d0
+.text           0x08004030     0x521c
  *(.text .text.*)
  .text.HAL_MspInit
                 0x08004030        0x4 ./system/src/stm32f4-hal/stm32f4xx_hal.o
@@ -16743,358 +16748,364 @@ privileged_functions
  .text._Z14lcd_write_linejPc
                 0x080054e0       0x1c ./src/lcd.o
                 0x080054e0                lcd_write_line(unsigned int, char*)
- .text._Z21led1_task_timeslicingPv
-                0x080054fc       0x58 ./src/main.o
-                0x080054fc                led1_task_timeslicing(void*)
- .text._Z21led2_task_timeslicingPv
-                0x08005554       0x58 ./src/main.o
-                0x08005554                led2_task_timeslicing(void*)
- .text._Z21led3_task_timeslicingPv
-                0x080055ac       0x58 ./src/main.o
-                0x080055ac                led3_task_timeslicing(void*)
- .text.main     0x08005604       0x80 ./src/main.o
-                0x08005604                main
+ .text._Z11blink1_taskPv
+                0x080054fc       0x30 ./src/main.o
+                0x080054fc                blink1_task(void*)
+ .text._Z11blink2_taskPv
+                0x0800552c       0x30 ./src/main.o
+                0x0800552c                blink2_task(void*)
+ .text._Z11blink3_taskPv
+                0x0800555c       0x30 ./src/main.o
+                0x0800555c                blink3_task(void*)
+ .text._Z11blink4_taskPv
+                0x0800558c       0x30 ./src/main.o
+                0x0800558c                blink4_task(void*)
+ .text.main     0x080055bc       0xd4 ./src/main.o
+                0x080055bc                main
  .text._Z11init_systemv
-                0x08005684       0x30 ./src/system_support.o
-                0x08005684                init_system()
+                0x08005690       0x30 ./src/system_support.o
+                0x08005690                init_system()
  .text.vListInitialise
-                0x080056b4       0x18 ./FreeRTOS/source/list.o
-                0x080056b4                vListInitialise
+                0x080056c0       0x18 ./FreeRTOS/source/list.o
+                0x080056c0                vListInitialise
  .text.vListInitialiseItem
-                0x080056cc        0x8 ./FreeRTOS/source/list.o
-                0x080056cc                vListInitialiseItem
+                0x080056d8        0x8 ./FreeRTOS/source/list.o
+                0x080056d8                vListInitialiseItem
  .text.vListInsertEnd
-                0x080056d4       0x18 ./FreeRTOS/source/list.o
-                0x080056d4                vListInsertEnd
+                0x080056e0       0x18 ./FreeRTOS/source/list.o
+                0x080056e0                vListInsertEnd
  .text.vListInsert
-                0x080056ec       0x34 ./FreeRTOS/source/list.o
-                0x080056ec                vListInsert
+                0x080056f8       0x34 ./FreeRTOS/source/list.o
+                0x080056f8                vListInsert
  .text.uxListRemove
-                0x08005720       0x24 ./FreeRTOS/source/list.o
-                0x08005720                uxListRemove
+                0x0800572c       0x24 ./FreeRTOS/source/list.o
+                0x0800572c                uxListRemove
  .text.prvResetNextTaskUnblockTime
-                0x08005744       0x2c ./FreeRTOS/source/tasks.o
+                0x08005750       0x2c ./FreeRTOS/source/tasks.o
  .text.prvIdleTask
-                0x08005770        0x8 ./FreeRTOS/source/tasks.o
+                0x0800577c        0x8 ./FreeRTOS/source/tasks.o
  .text.vPortInitMemory
-                0x08005778       0x20 ./FreeRTOS/MemoryManager/heap_tlsf.o
-                0x08005778                vPortInitMemory
+                0x08005784       0x20 ./FreeRTOS/MemoryManager/heap_tlsf.o
+                0x08005784                vPortInitMemory
  .text.block_size
-                0x08005798        0x8 ./FreeRTOS/MemoryManager/tlsf.o
+                0x080057a4        0x8 ./FreeRTOS/MemoryManager/tlsf.o
  .text.block_set_size
-                0x080057a0        0xc ./FreeRTOS/MemoryManager/tlsf.o
+                0x080057ac        0xc ./FreeRTOS/MemoryManager/tlsf.o
  .text.block_is_last
-                0x080057ac       0x10 ./FreeRTOS/MemoryManager/tlsf.o
+                0x080057b8       0x10 ./FreeRTOS/MemoryManager/tlsf.o
  .text.block_is_free
-                0x080057bc        0x8 ./FreeRTOS/MemoryManager/tlsf.o
+                0x080057c8        0x8 ./FreeRTOS/MemoryManager/tlsf.o
  .text.block_set_free
-                0x080057c4        0xc ./FreeRTOS/MemoryManager/tlsf.o
- .text.block_set_used
                 0x080057d0        0xc ./FreeRTOS/MemoryManager/tlsf.o
+ .text.block_set_used
+                0x080057dc        0xc ./FreeRTOS/MemoryManager/tlsf.o
  .text.block_is_prev_free
-                0x080057dc        0x8 ./FreeRTOS/MemoryManager/tlsf.o
+                0x080057e8        0x8 ./FreeRTOS/MemoryManager/tlsf.o
  .text.block_set_prev_free
-                0x080057e4        0xc ./FreeRTOS/MemoryManager/tlsf.o
- .text.block_set_prev_used
                 0x080057f0        0xc ./FreeRTOS/MemoryManager/tlsf.o
+ .text.block_set_prev_used
+                0x080057fc        0xc ./FreeRTOS/MemoryManager/tlsf.o
  .text.block_from_ptr
-                0x080057fc        0x4 ./FreeRTOS/MemoryManager/tlsf.o
- .text.block_to_ptr
-                0x08005800        0x4 ./FreeRTOS/MemoryManager/tlsf.o
- .text.offset_to_block
-                0x08005804        0x4 ./FreeRTOS/MemoryManager/tlsf.o
- .text.block_prev
                 0x08005808        0x4 ./FreeRTOS/MemoryManager/tlsf.o
+ .text.block_to_ptr
+                0x0800580c        0x4 ./FreeRTOS/MemoryManager/tlsf.o
+ .text.offset_to_block
+                0x08005810        0x4 ./FreeRTOS/MemoryManager/tlsf.o
+ .text.block_prev
+                0x08005814        0x4 ./FreeRTOS/MemoryManager/tlsf.o
  .text.block_can_split
-                0x0800580c       0x14 ./FreeRTOS/MemoryManager/tlsf.o
+                0x08005818       0x14 ./FreeRTOS/MemoryManager/tlsf.o
  .text.control_construct
-                0x08005820       0x38 ./FreeRTOS/MemoryManager/tlsf.o
+                0x0800582c       0x38 ./FreeRTOS/MemoryManager/tlsf.o
  .text.block_next
-                0x08005858       0x40 ./FreeRTOS/MemoryManager/tlsf.o
+                0x08005864       0x40 ./FreeRTOS/MemoryManager/tlsf.o
  .text.block_link_next
-                0x08005898        0xc ./FreeRTOS/MemoryManager/tlsf.o
+                0x080058a4        0xc ./FreeRTOS/MemoryManager/tlsf.o
  .text.block_mark_as_free
-                0x080058a4       0x14 ./FreeRTOS/MemoryManager/tlsf.o
+                0x080058b0       0x14 ./FreeRTOS/MemoryManager/tlsf.o
  .text.block_mark_as_used
-                0x080058b8       0x14 ./FreeRTOS/MemoryManager/tlsf.o
+                0x080058c4       0x14 ./FreeRTOS/MemoryManager/tlsf.o
  .text.align_down
-                0x080058cc       0x28 ./FreeRTOS/MemoryManager/tlsf.o
+                0x080058d8       0x28 ./FreeRTOS/MemoryManager/tlsf.o
  .text.align_ptr
-                0x080058f4       0x2c ./FreeRTOS/MemoryManager/tlsf.o
+                0x08005900       0x2c ./FreeRTOS/MemoryManager/tlsf.o
  .text.insert_free_block
-                0x08005920       0x98 ./FreeRTOS/MemoryManager/tlsf.o
+                0x0800592c       0x98 ./FreeRTOS/MemoryManager/tlsf.o
  .text.remove_free_block
-                0x080059b8       0x7c ./FreeRTOS/MemoryManager/tlsf.o
+                0x080059c4       0x7c ./FreeRTOS/MemoryManager/tlsf.o
  .text.align_up
-                0x08005a34       0x2c ./FreeRTOS/MemoryManager/tlsf.o
+                0x08005a40       0x2c ./FreeRTOS/MemoryManager/tlsf.o
  .text.adjust_request_size
-                0x08005a60       0x20 ./FreeRTOS/MemoryManager/tlsf.o
+                0x08005a6c       0x20 ./FreeRTOS/MemoryManager/tlsf.o
  .text.block_split
-                0x08005a80       0xa0 ./FreeRTOS/MemoryManager/tlsf.o
+                0x08005a8c       0xa0 ./FreeRTOS/MemoryManager/tlsf.o
  .text.block_absorb
-                0x08005b20       0x40 ./FreeRTOS/MemoryManager/tlsf.o
+                0x08005b2c       0x40 ./FreeRTOS/MemoryManager/tlsf.o
  .text.tlsf_fls
-                0x08005b60       0x14 ./FreeRTOS/MemoryManager/tlsf.o
+                0x08005b6c       0x14 ./FreeRTOS/MemoryManager/tlsf.o
  .text.mapping_insert
-                0x08005b74       0x30 ./FreeRTOS/MemoryManager/tlsf.o
+                0x08005b80       0x30 ./FreeRTOS/MemoryManager/tlsf.o
  .text.block_insert
-                0x08005ba4       0x28 ./FreeRTOS/MemoryManager/tlsf.o
+                0x08005bb0       0x28 ./FreeRTOS/MemoryManager/tlsf.o
  .text.block_trim_free
-                0x08005bcc       0x54 ./FreeRTOS/MemoryManager/tlsf.o
+                0x08005bd8       0x54 ./FreeRTOS/MemoryManager/tlsf.o
  .text.block_prepare_used
-                0x08005c20       0x1c ./FreeRTOS/MemoryManager/tlsf.o
+                0x08005c2c       0x1c ./FreeRTOS/MemoryManager/tlsf.o
  .text.block_remove
-                0x08005c3c       0x28 ./FreeRTOS/MemoryManager/tlsf.o
+                0x08005c48       0x28 ./FreeRTOS/MemoryManager/tlsf.o
  .text.block_merge_prev
-                0x08005c64       0x60 ./FreeRTOS/MemoryManager/tlsf.o
+                0x08005c70       0x60 ./FreeRTOS/MemoryManager/tlsf.o
  .text.block_merge_next
-                0x08005cc4       0x60 ./FreeRTOS/MemoryManager/tlsf.o
+                0x08005cd0       0x60 ./FreeRTOS/MemoryManager/tlsf.o
  .text.mapping_search
-                0x08005d24       0x28 ./FreeRTOS/MemoryManager/tlsf.o
+                0x08005d30       0x28 ./FreeRTOS/MemoryManager/tlsf.o
  .text.tlsf_ffs
-                0x08005d4c       0x14 ./FreeRTOS/MemoryManager/tlsf.o
+                0x08005d58       0x14 ./FreeRTOS/MemoryManager/tlsf.o
  .text.search_suitable_block
-                0x08005d60       0x6c ./FreeRTOS/MemoryManager/tlsf.o
+                0x08005d6c       0x6c ./FreeRTOS/MemoryManager/tlsf.o
  .text.block_locate_free
-                0x08005dcc       0x64 ./FreeRTOS/MemoryManager/tlsf.o
+                0x08005dd8       0x64 ./FreeRTOS/MemoryManager/tlsf.o
  .text.tlsf_size
-                0x08005e30        0x8 ./FreeRTOS/MemoryManager/tlsf.o
-                0x08005e30                tlsf_size
+                0x08005e3c        0x8 ./FreeRTOS/MemoryManager/tlsf.o
+                0x08005e3c                tlsf_size
  .text.tlsf_pool_overhead
-                0x08005e38        0x4 ./FreeRTOS/MemoryManager/tlsf.o
-                0x08005e38                tlsf_pool_overhead
+                0x08005e44        0x4 ./FreeRTOS/MemoryManager/tlsf.o
+                0x08005e44                tlsf_pool_overhead
  .text.tlsf_add_pool
-                0x08005e3c       0x7c ./FreeRTOS/MemoryManager/tlsf.o
-                0x08005e3c                tlsf_add_pool
+                0x08005e48       0x7c ./FreeRTOS/MemoryManager/tlsf.o
+                0x08005e48                tlsf_add_pool
  .text.tlsf_create
-                0x08005eb8       0x18 ./FreeRTOS/MemoryManager/tlsf.o
-                0x08005eb8                tlsf_create
+                0x08005ec4       0x18 ./FreeRTOS/MemoryManager/tlsf.o
+                0x08005ec4                tlsf_create
  .text.tlsf_create_with_pool
-                0x08005ed0       0x20 ./FreeRTOS/MemoryManager/tlsf.o
-                0x08005ed0                tlsf_create_with_pool
+                0x08005edc       0x20 ./FreeRTOS/MemoryManager/tlsf.o
+                0x08005edc                tlsf_create_with_pool
  .text.tlsf_malloc
-                0x08005ef0       0x24 ./FreeRTOS/MemoryManager/tlsf.o
-                0x08005ef0                tlsf_malloc
+                0x08005efc       0x24 ./FreeRTOS/MemoryManager/tlsf.o
+                0x08005efc                tlsf_malloc
  .text.tlsf_free
-                0x08005f14       0x50 ./FreeRTOS/MemoryManager/tlsf.o
-                0x08005f14                tlsf_free
+                0x08005f20       0x50 ./FreeRTOS/MemoryManager/tlsf.o
+                0x08005f20                tlsf_free
  .text.prvRaisePrivilege
-                0x08005f64       0x14 ./FreeRTOS/ARM_CM3_MPU/port.o
+                0x08005f70       0x14 ./FreeRTOS/ARM_CM3_MPU/port.o
  .text.vPortEnterCritical
-                0x08005f78       0x30 ./FreeRTOS/ARM_CM3_MPU/port.o
-                0x08005f78                vPortEnterCritical
+                0x08005f84       0x30 ./FreeRTOS/ARM_CM3_MPU/port.o
+                0x08005f84                vPortEnterCritical
  .text.vPortExitCritical
-                0x08005fa8       0x40 ./FreeRTOS/ARM_CM3_MPU/port.o
-                0x08005fa8                vPortExitCritical
+                0x08005fb4       0x40 ./FreeRTOS/ARM_CM3_MPU/port.o
+                0x08005fb4                vPortExitCritical
  .text.MPU_xTaskGenericCreate
-                0x08005fe8       0x4c ./FreeRTOS/ARM_CM3_MPU/port.o
-                0x08005fe8                MPU_xTaskGenericCreate
+                0x08005ff4       0x4c ./FreeRTOS/ARM_CM3_MPU/port.o
+                0x08005ff4                MPU_xTaskGenericCreate
+ .text.MPU_vTaskDelayUntil
+                0x08006040       0x28 ./FreeRTOS/ARM_CM3_MPU/port.o
+                0x08006040                MPU_vTaskDelayUntil
  .text.MPU_xTaskGetTickCount
-                0x08006034       0x24 ./FreeRTOS/ARM_CM3_MPU/port.o
-                0x08006034                MPU_xTaskGetTickCount
+                0x08006068       0x24 ./FreeRTOS/ARM_CM3_MPU/port.o
+                0x08006068                MPU_xTaskGetTickCount
  .text.startup._GLOBAL__sub_I__ZTSSt16__numpunct_cacheIwE
-                0x08006058       0xc4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(wlocale-inst.o)
+                0x0800608c       0xc4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(wlocale-inst.o)
  .text.startup._GLOBAL__sub_I__ZTSSt21__ctype_abstract_baseIcE
-                0x0800611c       0xc4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(locale-inst.o)
- .text.__errno  0x080061e0        0xc c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-errno.o)
-                0x080061e0                __errno
- .text.memchr   0x080061ec       0x1e c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-memchr.o)
-                0x080061ec                memchr
- .text.memcpy   0x0800620a       0x16 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-memcpy.o)
-                0x0800620a                memcpy
- .text.memmove  0x08006220       0x36 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-memmove.o)
-                0x08006220                memmove
- .text.memset   0x08006256       0x10 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-memset.o)
-                0x08006256                memset
- *fill*         0x08006266        0x2 
- .text._free_r  0x08006268       0x88 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-nano-freer.o)
-                0x08006268                _free_r
+                0x08006150       0xc4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(locale-inst.o)
+ .text.__errno  0x08006214        0xc c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-errno.o)
+                0x08006214                __errno
+ .text.memchr   0x08006220       0x1e c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-memchr.o)
+                0x08006220                memchr
+ .text.memcpy   0x0800623e       0x16 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-memcpy.o)
+                0x0800623e                memcpy
+ .text.memmove  0x08006254       0x36 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-memmove.o)
+                0x08006254                memmove
+ .text.memset   0x0800628a       0x10 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-memset.o)
+                0x0800628a                memset
+ *fill*         0x0800629a        0x2 
+ .text._free_r  0x0800629c       0x88 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-nano-freer.o)
+                0x0800629c                _free_r
  .text._malloc_r
-                0x080062f0       0xac c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-nano-mallocr.o)
-                0x080062f0                _malloc_r
- .text._sbrk_r  0x0800639c       0x20 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-sbrkr.o)
-                0x0800639c                _sbrk_r
- .text.strlen   0x080063bc       0x10 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-strlen.o)
-                0x080063bc                strlen
+                0x08006324       0xac c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-nano-mallocr.o)
+                0x08006324                _malloc_r
+ .text._sbrk_r  0x080063d0       0x20 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-sbrkr.o)
+                0x080063d0                _sbrk_r
+ .text.strlen   0x080063f0       0x10 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-strlen.o)
+                0x080063f0                strlen
  .text._vsnprintf_r
-                0x080063cc       0x52 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-vsnprintf.o)
-                0x080063cc                _vsnprintf_r
-                0x080063cc                _vsniprintf_r
- *fill*         0x0800641e        0x2 
+                0x08006400       0x52 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-vsnprintf.o)
+                0x08006400                _vsnprintf_r
+                0x08006400                _vsniprintf_r
+ *fill*         0x08006452        0x2 
  .text.vsnprintf
-                0x08006420       0x20 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-vsnprintf.o)
-                0x08006420                vsnprintf
-                0x08006420                vsniprintf
+                0x08006454       0x20 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-vsnprintf.o)
+                0x08006454                vsnprintf
+                0x08006454                vsniprintf
  .text.__ssputs_r
-                0x08006440       0xb2 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-nano-svfprintf.o)
-                0x08006440                __ssputs_r
- *fill*         0x080064f2        0x2 
+                0x08006474       0xb2 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-nano-svfprintf.o)
+                0x08006474                __ssputs_r
+ *fill*         0x08006526        0x2 
  .text._svfprintf_r
-                0x080064f4      0x1e4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-nano-svfprintf.o)
-                0x080064f4                _svfiprintf_r
-                0x080064f4                _svfprintf_r
+                0x08006528      0x1e4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-nano-svfprintf.o)
+                0x08006528                _svfiprintf_r
+                0x08006528                _svfprintf_r
  .text._printf_common
-                0x080066d8       0xea c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-nano-vfprintf_i.o)
-                0x080066d8                _printf_common
- *fill*         0x080067c2        0x2 
+                0x0800670c       0xea c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-nano-vfprintf_i.o)
+                0x0800670c                _printf_common
+ *fill*         0x080067f6        0x2 
  .text._printf_i
-                0x080067c4      0x240 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-nano-vfprintf_i.o)
-                0x080067c4                _printf_i
+                0x080067f8      0x240 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-nano-vfprintf_i.o)
+                0x080067f8                _printf_i
  .text._realloc_r
-                0x08006a04       0x4c c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-nano-reallocr.o)
-                0x08006a04                _realloc_r
+                0x08006a38       0x4c c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-nano-reallocr.o)
+                0x08006a38                _realloc_r
  .text._malloc_usable_size_r
-                0x08006a50       0x14 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-nano-msizer.o)
-                0x08006a50                _malloc_usable_size_r
+                0x08006a84       0x14 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-nano-msizer.o)
+                0x08006a84                _malloc_usable_size_r
  *(.rodata .rodata.* .constdata .constdata.*)
  .rodata.str1.4
-                0x08006a64       0x31 ./system/src/stm32f4-hal/stm32f4xx_hal_cortex.o
- *fill*         0x08006a95        0x3 
+                0x08006a98       0x31 ./system/src/stm32f4-hal/stm32f4xx_hal_cortex.o
+ *fill*         0x08006ac9        0x3 
  .rodata.str1.4
-                0x08006a98       0x2f ./system/src/stm32f4-hal/stm32f4xx_hal_gpio.o
- *fill*         0x08006ac7        0x1 
+                0x08006acc       0x2f ./system/src/stm32f4-hal/stm32f4xx_hal_gpio.o
+ *fill*         0x08006afb        0x1 
  .rodata.str1.4
-                0x08006ac8       0x2e ./system/src/stm32f4-hal/stm32f4xx_ll_fsmc.o
- *fill*         0x08006af6        0x2 
+                0x08006afc       0x2e ./system/src/stm32f4-hal/stm32f4xx_ll_fsmc.o
+ *fill*         0x08006b2a        0x2 
  .rodata.str1.4
-                0x08006af8       0x14 ./system/src/newlib/_exit.o
+                0x08006b2c       0x14 ./system/src/newlib/_exit.o
  .rodata.str1.4
-                0x08006b0c       0x6b ./system/src/newlib/assert.o
+                0x08006b40       0x6b ./system/src/newlib/assert.o
                                  0x6f (size before relaxing)
- *fill*         0x08006b77        0x1 
+ *fill*         0x08006bab        0x1 
  .rodata.str1.4
-                0x08006b78       0x29 ./system/src/diag/Trace.o
+                0x08006bac       0x29 ./system/src/diag/Trace.o
                                  0x2d (size before relaxing)
- *fill*         0x08006ba1        0x3 
+ *fill*         0x08006bd5        0x3 
  .rodata.str1.4
-                0x08006ba4      0x146 ./system/src/cortexm/exception_handlers.o
- *fill*         0x08006cea        0x2 
+                0x08006bd8      0x146 ./system/src/cortexm/exception_handlers.o
+ *fill*         0x08006d1e        0x2 
  .rodata.AHBPrescTable
-                0x08006cec       0x10 ./system/src/cmsis/system_stm32f4xx.o
-                0x08006cec                AHBPrescTable
+                0x08006d20       0x10 ./system/src/cmsis/system_stm32f4xx.o
+                0x08006d20                AHBPrescTable
  .rodata.Font24_Table
-                0x08006cfc     0x1ab8 ./system/STM324xG_EVAL/font24.o
-                0x08006cfc                Font24_Table
- .rodata        0x080087b4       0x50 ./system/STM324xG_EVAL/stm324xg_eval.o
-                0x080087b4                GPIO_PIN
-                0x080087bc                GPIO_PORT
-                0x080087cc                BUTTON_PIN
-                0x080087d4                BUTTON_PORT
-                0x080087e0                BUTTON_IRQn
-                0x080087e8                COM_RX_AF
-                0x080087ec                COM_TX_AF
-                0x080087f0                COM_RX_PIN
-                0x080087f4                COM_TX_PIN
-                0x080087f8                COM_RX_PORT
-                0x080087fc                COM_TX_PORT
-                0x08008800                COM_USART
+                0x08006d30     0x1ab8 ./system/STM324xG_EVAL/font24.o
+                0x08006d30                Font24_Table
+ .rodata        0x080087e8       0x50 ./system/STM324xG_EVAL/stm324xg_eval.o
+                0x080087e8                GPIO_PIN
+                0x080087f0                GPIO_PORT
+                0x08008800                BUTTON_PIN
+                0x08008808                BUTTON_PORT
+                0x08008814                BUTTON_IRQn
+                0x0800881c                COM_RX_AF
+                0x08008820                COM_TX_AF
+                0x08008824                COM_RX_PIN
+                0x08008828                COM_TX_PIN
+                0x0800882c                COM_RX_PORT
+                0x08008830                COM_TX_PORT
+                0x08008834                COM_USART
  .rodata.str1.4
-                0x08008804       0x4e ./src/main.o
-                                 0x51 (size before relaxing)
- *fill*         0x08008852        0x2 
+                0x08008838       0x66 ./src/main.o
+                                 0x69 (size before relaxing)
+ *fill*         0x0800889e        0x2 
  .rodata.str1.4
-                0x08008854        0x5 ./FreeRTOS/source/tasks.o
- *fill*         0x08008859        0x3 
+                0x080088a0        0x5 ./FreeRTOS/source/tasks.o
+ *fill*         0x080088a5        0x3 
  .rodata.str1.4
-                0x0800885c        0x8 ./FreeRTOS/source/timers.o
+                0x080088a8        0x8 ./FreeRTOS/source/timers.o
  .rodata.__func__.4084
-                0x08008864        0xa ./FreeRTOS/MemoryManager/tlsf.o
- *fill*         0x0800886e        0x2 
+                0x080088b0        0xa ./FreeRTOS/MemoryManager/tlsf.o
+ *fill*         0x080088ba        0x2 
  .rodata.__func__.3885
-                0x08008870        0xd ./FreeRTOS/MemoryManager/tlsf.o
- *fill*         0x0800887d        0x3 
- .rodata.__func__.3849
-                0x08008880       0x12 ./FreeRTOS/MemoryManager/tlsf.o
- *fill*         0x08008892        0x2 
- .rodata.__func__.3783
-                0x08008894        0xb ./FreeRTOS/MemoryManager/tlsf.o
- *fill*         0x0800889f        0x1 
- .rodata.__func__.3840
-                0x080088a0       0x16 ./FreeRTOS/MemoryManager/tlsf.o
- *fill*         0x080088b6        0x2 
- .rodata.__func__.3897
-                0x080088b8       0x11 ./FreeRTOS/MemoryManager/tlsf.o
+                0x080088bc        0xd ./FreeRTOS/MemoryManager/tlsf.o
  *fill*         0x080088c9        0x3 
+ .rodata.__func__.3849
+                0x080088cc       0x12 ./FreeRTOS/MemoryManager/tlsf.o
+ *fill*         0x080088de        0x2 
+ .rodata.__func__.3783
+                0x080088e0        0xb ./FreeRTOS/MemoryManager/tlsf.o
+ *fill*         0x080088eb        0x1 
+ .rodata.__func__.3840
+                0x080088ec       0x16 ./FreeRTOS/MemoryManager/tlsf.o
+ *fill*         0x08008902        0x2 
+ .rodata.__func__.3897
+                0x08008904       0x11 ./FreeRTOS/MemoryManager/tlsf.o
+ *fill*         0x08008915        0x3 
  .rodata.__func__.3903
-                0x080088cc       0x10 ./FreeRTOS/MemoryManager/tlsf.o
+                0x08008918       0x10 ./FreeRTOS/MemoryManager/tlsf.o
  .rodata.__func__.3925
-                0x080088dc       0x12 ./FreeRTOS/MemoryManager/tlsf.o
- *fill*         0x080088ee        0x2 
+                0x08008928       0x12 ./FreeRTOS/MemoryManager/tlsf.o
+ *fill*         0x0800893a        0x2 
  .rodata.str1.4
-                0x080088f0      0x820 ./FreeRTOS/MemoryManager/tlsf.o
+                0x0800893c      0x820 ./FreeRTOS/MemoryManager/tlsf.o
  .rodata.__func__.3800
-                0x08009110        0x9 ./FreeRTOS/MemoryManager/tlsf.o
- *fill*         0x08009119        0x3 
+                0x0800915c        0x9 ./FreeRTOS/MemoryManager/tlsf.o
+ *fill*         0x08009165        0x3 
  .rodata.__func__.3857
-                0x0800911c       0x12 ./FreeRTOS/MemoryManager/tlsf.o
- *fill*         0x0800912e        0x2 
+                0x08009168       0x12 ./FreeRTOS/MemoryManager/tlsf.o
+ *fill*         0x0800917a        0x2 
  .rodata.__func__.3891
-                0x08009130       0x11 ./FreeRTOS/MemoryManager/tlsf.o
- *fill*         0x08009141        0x3 
+                0x0800917c       0x11 ./FreeRTOS/MemoryManager/tlsf.o
+ *fill*         0x0800918d        0x3 
  .rodata.__func__.3805
-                0x08009144        0xb ./FreeRTOS/MemoryManager/tlsf.o
- *fill*         0x0800914f        0x1 
+                0x08009190        0xb ./FreeRTOS/MemoryManager/tlsf.o
+ *fill*         0x0800919b        0x1 
  .rodata.__func__.3811
-                0x08009150        0xa ./FreeRTOS/MemoryManager/tlsf.o
- *fill*         0x0800915a        0x2 
+                0x0800919c        0xa ./FreeRTOS/MemoryManager/tlsf.o
+ *fill*         0x080091a6        0x2 
  .rodata.__func__.3880
-                0x0800915c        0xc ./FreeRTOS/MemoryManager/tlsf.o
+                0x080091a8        0xc ./FreeRTOS/MemoryManager/tlsf.o
  .rodata.str1.1
-                0x08009168        0x2 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-impure.o)
+                0x080091b4        0x2 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-impure.o)
  .rodata.str1.1
-                0x0800916a       0x11 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-nano-svfprintf.o)
+                0x080091b6       0x11 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-nano-svfprintf.o)
  .rodata.str1.1
-                0x0800917b       0x22 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-nano-vfprintf_i.o)
- *fill*         0x0800919d        0x3 
+                0x080091c7       0x22 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-nano-vfprintf_i.o)
+ *fill*         0x080091e9        0x3 
  .rodata.__sf_fake_stdin
-                0x080091a0       0x20 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-findfp.o)
-                0x080091a0                __sf_fake_stdin
+                0x080091ec       0x20 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-findfp.o)
+                0x080091ec                __sf_fake_stdin
  .rodata.__sf_fake_stdout
-                0x080091c0       0x20 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-findfp.o)
-                0x080091c0                __sf_fake_stdout
+                0x0800920c       0x20 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-findfp.o)
+                0x0800920c                __sf_fake_stdout
  .rodata.__sf_fake_stderr
-                0x080091e0       0x20 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-findfp.o)
-                0x080091e0                __sf_fake_stderr
+                0x0800922c       0x20 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-findfp.o)
+                0x0800922c                __sf_fake_stderr
  *(vtable)
  *(.eh_frame*)
- .eh_frame      0x08009200        0x0 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-strcmp.o)
+ .eh_frame      0x0800924c        0x0 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-strcmp.o)
                                  0x28 (size before relaxing)
  *(.glue_7)
  .glue_7        0x00000000        0x0 linker stubs
  *(.glue_7t)
  .glue_7t       0x00000000        0x0 linker stubs
 
-.vfp11_veneer   0x08009200        0x0
+.vfp11_veneer   0x0800924c        0x0
  .vfp11_veneer  0x00000000        0x0 linker stubs
 
-.v4_bx          0x08009200        0x0
+.v4_bx          0x0800924c        0x0
  .v4_bx         0x00000000        0x0 linker stubs
 
-.iplt           0x08009200        0x0
+.iplt           0x0800924c        0x0
  .iplt          0x00000000        0x0 ./system/src/stm32f4-hal/stm32f4xx_hal.o
 
-.rel.dyn        0x08009200        0x0
+.rel.dyn        0x0800924c        0x0
  .rel.iplt      0x00000000        0x0 ./system/src/stm32f4-hal/stm32f4xx_hal.o
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
-                0x08009200                . = ALIGN (0x4)
-                0x08009200                __exidx_start = .
+                0x0800924c                . = ALIGN (0x4)
+                0x0800924c                __exidx_start = .
 
 .ARM.exidx
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
-                0x08009200                __exidx_end = .
-                0x08009200                . = ALIGN (0x4)
-                0x08009200                _etext = .
-                0x08009200                __etext = .
+                0x0800924c                __exidx_end = .
+                0x0800924c                . = ALIGN (0x4)
+                0x0800924c                _etext = .
+                0x0800924c                __etext = .
 
-.data_CCMRAM    0x10000000        0x0 load address 0x08009200
+.data_CCMRAM    0x10000000        0x0 load address 0x0800924c
  FILL mask 0xff
  *(.data.CCMRAM .data.CCMRAM.*)
                 0x10000000                . = ALIGN (0x4)
-                0x08009200                _sidata = LOADADDR (.data)
+                0x0800924c                _sidata = LOADADDR (.data)
 
-.data           0x20000000       0xbc load address 0x08009200
+.data           0x20000000       0xbc load address 0x0800924c
  FILL mask 0xff
                 0x20000000                _sdata = .
                 0x20000000                __data_start__ = .
@@ -17124,13 +17135,13 @@ privileged_functions
                 0x200000bc                _edata = .
                 0x200000bc                __data_end__ = .
 
-.igot.plt       0x200000bc        0x0 load address 0x080092bc
+.igot.plt       0x200000bc        0x0 load address 0x08009308
  .igot.plt      0x00000000        0x0 ./system/src/stm32f4-hal/stm32f4xx_hal.o
 
 .bss_CCMRAM     0x10000000        0x0
  *(.bss.CCMRAM .bss.CCMRAM.*)
 
-.bss            0x200000bc      0x114
+.bss            0x200000bc      0x110
                 0x200000bc                __bss_start__ = .
                 0x200000bc                _sbss = .
  *(.bss_begin .bss_begin.*)
@@ -17146,96 +17157,94 @@ privileged_functions
                 0x20000148        0x1 ./system/STM324xG_EVAL/stm324xg_eval.o
  *fill*         0x20000149        0x3 
  .bss.lcd_drv   0x2000014c        0x4 ./system/STM324xG_EVAL/stm324xg_eval_lcd.o
- .bss.stuff     0x20000150        0x4 ./src/main.o
-                0x20000150                stuff
  .bss._ZGVNSt7collateIwE2idE
-                0x20000154        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(wlocale-inst.o)
-                0x20000154                guard variable for std::collate<wchar_t>::id
+                0x20000150        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(wlocale-inst.o)
+                0x20000150                guard variable for std::collate<wchar_t>::id
  .bss._ZGVNSt8messagesIwE2idE
-                0x20000158        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(wlocale-inst.o)
-                0x20000158                guard variable for std::messages<wchar_t>::id
+                0x20000154        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(wlocale-inst.o)
+                0x20000154                guard variable for std::messages<wchar_t>::id
  .bss._ZGVNSt8time_getIwSt19istreambuf_iteratorIwSt11char_traitsIwEEE2idE
-                0x2000015c        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(wlocale-inst.o)
-                0x2000015c                guard variable for std::time_get<wchar_t, std::istreambuf_iterator<wchar_t, std::char_traits<wchar_t> > >::id
+                0x20000158        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(wlocale-inst.o)
+                0x20000158                guard variable for std::time_get<wchar_t, std::istreambuf_iterator<wchar_t, std::char_traits<wchar_t> > >::id
  .bss._ZGVNSt8time_putIwSt19ostreambuf_iteratorIwSt11char_traitsIwEEE2idE
-                0x20000160        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(wlocale-inst.o)
-                0x20000160                guard variable for std::time_put<wchar_t, std::ostreambuf_iterator<wchar_t, std::char_traits<wchar_t> > >::id
+                0x2000015c        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(wlocale-inst.o)
+                0x2000015c                guard variable for std::time_put<wchar_t, std::ostreambuf_iterator<wchar_t, std::char_traits<wchar_t> > >::id
  .bss._ZGVNSt11__timepunctIwE2idE
-                0x20000164        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(wlocale-inst.o)
-                0x20000164                guard variable for std::__timepunct<wchar_t>::id
+                0x20000160        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(wlocale-inst.o)
+                0x20000160                guard variable for std::__timepunct<wchar_t>::id
  .bss._ZGVNSt7num_putIwSt19ostreambuf_iteratorIwSt11char_traitsIwEEE2idE
-                0x20000168        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(wlocale-inst.o)
-                0x20000168                guard variable for std::num_put<wchar_t, std::ostreambuf_iterator<wchar_t, std::char_traits<wchar_t> > >::id
+                0x20000164        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(wlocale-inst.o)
+                0x20000164                guard variable for std::num_put<wchar_t, std::ostreambuf_iterator<wchar_t, std::char_traits<wchar_t> > >::id
  .bss._ZGVNSt7num_getIwSt19istreambuf_iteratorIwSt11char_traitsIwEEE2idE
-                0x2000016c        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(wlocale-inst.o)
-                0x2000016c                guard variable for std::num_get<wchar_t, std::istreambuf_iterator<wchar_t, std::char_traits<wchar_t> > >::id
+                0x20000168        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(wlocale-inst.o)
+                0x20000168                guard variable for std::num_get<wchar_t, std::istreambuf_iterator<wchar_t, std::char_traits<wchar_t> > >::id
  .bss._ZGVNSt8numpunctIwE2idE
-                0x20000170        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(wlocale-inst.o)
-                0x20000170                guard variable for std::numpunct<wchar_t>::id
+                0x2000016c        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(wlocale-inst.o)
+                0x2000016c                guard variable for std::numpunct<wchar_t>::id
  .bss._ZGVNSt9money_putIwSt19ostreambuf_iteratorIwSt11char_traitsIwEEE2idE
-                0x20000174        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(wlocale-inst.o)
-                0x20000174                guard variable for std::money_put<wchar_t, std::ostreambuf_iterator<wchar_t, std::char_traits<wchar_t> > >::id
+                0x20000170        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(wlocale-inst.o)
+                0x20000170                guard variable for std::money_put<wchar_t, std::ostreambuf_iterator<wchar_t, std::char_traits<wchar_t> > >::id
  .bss._ZGVNSt9money_getIwSt19istreambuf_iteratorIwSt11char_traitsIwEEE2idE
-                0x20000178        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(wlocale-inst.o)
-                0x20000178                guard variable for std::money_get<wchar_t, std::istreambuf_iterator<wchar_t, std::char_traits<wchar_t> > >::id
+                0x20000174        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(wlocale-inst.o)
+                0x20000174                guard variable for std::money_get<wchar_t, std::istreambuf_iterator<wchar_t, std::char_traits<wchar_t> > >::id
  .bss._ZGVNSt10moneypunctIwLb1EE2idE
-                0x2000017c        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(wlocale-inst.o)
-                0x2000017c                guard variable for std::moneypunct<wchar_t, true>::id
+                0x20000178        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(wlocale-inst.o)
+                0x20000178                guard variable for std::moneypunct<wchar_t, true>::id
  .bss._ZGVNSt10moneypunctIwLb0EE2idE
-                0x20000180        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(wlocale-inst.o)
-                0x20000180                guard variable for std::moneypunct<wchar_t, false>::id
+                0x2000017c        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(wlocale-inst.o)
+                0x2000017c                guard variable for std::moneypunct<wchar_t, false>::id
  .bss._ZGVNSt7collateIcE2idE
-                0x20000184        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(locale-inst.o)
-                0x20000184                guard variable for std::collate<char>::id
+                0x20000180        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(locale-inst.o)
+                0x20000180                guard variable for std::collate<char>::id
  .bss._ZGVNSt8messagesIcE2idE
-                0x20000188        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(locale-inst.o)
-                0x20000188                guard variable for std::messages<char>::id
+                0x20000184        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(locale-inst.o)
+                0x20000184                guard variable for std::messages<char>::id
  .bss._ZGVNSt8time_getIcSt19istreambuf_iteratorIcSt11char_traitsIcEEE2idE
-                0x2000018c        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(locale-inst.o)
-                0x2000018c                guard variable for std::time_get<char, std::istreambuf_iterator<char, std::char_traits<char> > >::id
+                0x20000188        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(locale-inst.o)
+                0x20000188                guard variable for std::time_get<char, std::istreambuf_iterator<char, std::char_traits<char> > >::id
  .bss._ZGVNSt8time_putIcSt19ostreambuf_iteratorIcSt11char_traitsIcEEE2idE
-                0x20000190        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(locale-inst.o)
-                0x20000190                guard variable for std::time_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::id
+                0x2000018c        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(locale-inst.o)
+                0x2000018c                guard variable for std::time_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::id
  .bss._ZGVNSt11__timepunctIcE2idE
-                0x20000194        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(locale-inst.o)
-                0x20000194                guard variable for std::__timepunct<char>::id
+                0x20000190        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(locale-inst.o)
+                0x20000190                guard variable for std::__timepunct<char>::id
  .bss._ZGVNSt7num_putIcSt19ostreambuf_iteratorIcSt11char_traitsIcEEE2idE
-                0x20000198        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(locale-inst.o)
-                0x20000198                guard variable for std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::id
+                0x20000194        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(locale-inst.o)
+                0x20000194                guard variable for std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::id
  .bss._ZGVNSt7num_getIcSt19istreambuf_iteratorIcSt11char_traitsIcEEE2idE
-                0x2000019c        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(locale-inst.o)
-                0x2000019c                guard variable for std::num_get<char, std::istreambuf_iterator<char, std::char_traits<char> > >::id
+                0x20000198        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(locale-inst.o)
+                0x20000198                guard variable for std::num_get<char, std::istreambuf_iterator<char, std::char_traits<char> > >::id
  .bss._ZGVNSt8numpunctIcE2idE
-                0x200001a0        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(locale-inst.o)
-                0x200001a0                guard variable for std::numpunct<char>::id
+                0x2000019c        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(locale-inst.o)
+                0x2000019c                guard variable for std::numpunct<char>::id
  .bss._ZGVNSt9money_putIcSt19ostreambuf_iteratorIcSt11char_traitsIcEEE2idE
-                0x200001a4        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(locale-inst.o)
-                0x200001a4                guard variable for std::money_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::id
+                0x200001a0        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(locale-inst.o)
+                0x200001a0                guard variable for std::money_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::id
  .bss._ZGVNSt9money_getIcSt19istreambuf_iteratorIcSt11char_traitsIcEEE2idE
-                0x200001a8        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(locale-inst.o)
-                0x200001a8                guard variable for std::money_get<char, std::istreambuf_iterator<char, std::char_traits<char> > >::id
+                0x200001a4        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(locale-inst.o)
+                0x200001a4                guard variable for std::money_get<char, std::istreambuf_iterator<char, std::char_traits<char> > >::id
  .bss._ZGVNSt10moneypunctIcLb1EE2idE
-                0x200001ac        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(locale-inst.o)
-                0x200001ac                guard variable for std::moneypunct<char, true>::id
+                0x200001a8        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(locale-inst.o)
+                0x200001a8                guard variable for std::moneypunct<char, true>::id
  .bss._ZGVNSt10moneypunctIcLb0EE2idE
-                0x200001b0        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(locale-inst.o)
-                0x200001b0                guard variable for std::moneypunct<char, false>::id
+                0x200001ac        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(locale-inst.o)
+                0x200001ac                guard variable for std::moneypunct<char, false>::id
  .bss.__malloc_sbrk_start
-                0x200001b4        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-nano-mallocr.o)
-                0x200001b4                __malloc_sbrk_start
+                0x200001b0        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-nano-mallocr.o)
+                0x200001b0                __malloc_sbrk_start
  .bss.__malloc_free_list
-                0x200001b8        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-nano-mallocr.o)
-                0x200001b8                __malloc_free_list
+                0x200001b4        0x4 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-nano-mallocr.o)
+                0x200001b4                __malloc_free_list
  *(COMMON)
- COMMON         0x200001bc        0x4 ./system/src/newlib/_syscalls.o
-                0x200001bc                errno
- COMMON         0x200001c0        0xc ./system/STM324xG_EVAL/stm324xg_eval_lcd.o
-                0x200001c0                DrawProp
+ COMMON         0x200001b8        0x4 ./system/src/newlib/_syscalls.o
+                0x200001b8                errno
+ COMMON         0x200001bc        0xc ./system/STM324xG_EVAL/stm324xg_eval_lcd.o
+                0x200001bc                DrawProp
  *(.bss_end .bss_end.*)
- .bss_end       0x200001cc        0x4 ./system/src/newlib/_startup.o
-                0x200001d0                . = ALIGN (0x4)
-                0x200001d0                __bss_end__ = .
-                0x200001d0                _ebss = .
+ .bss_end       0x200001c8        0x4 ./system/src/newlib/_startup.o
+                0x200001cc                . = ALIGN (0x4)
+                0x200001cc                __bss_end__ = .
+                0x200001cc                _ebss = .
 
 .system_ram     0x10000000    0x10000
                 0x10000000                _s_system_ram = .
@@ -17265,19 +17274,19 @@ privileged_functions
 .noinit_CCMRAM
  *(.noinit.CCMRAM .noinit.CCMRAM.*)
 
-.noinit         0x200001d0        0x0
-                0x200001d0                _noinit = .
+.noinit         0x200001cc        0x0
+                0x200001cc                _noinit = .
  *(.noinit .noinit.*)
-                0x200001d0                . = ALIGN (0x4)
-                0x200001d0                _end_noinit = .
-                0x200001d0                PROVIDE (end, _end_noinit)
-                0x200001d0                PROVIDE (_end, _end_noinit)
-                0x200001d0                PROVIDE (__end, _end_noinit)
-                0x200001d0                PROVIDE (__end__, _end_noinit)
+                0x200001cc                . = ALIGN (0x4)
+                0x200001cc                _end_noinit = .
+                0x200001cc                PROVIDE (end, _end_noinit)
+                0x200001cc                PROVIDE (_end, _end_noinit)
+                0x200001cc                PROVIDE (__end, _end_noinit)
+                0x200001cc                PROVIDE (__end__, _end_noinit)
 
-._check_stack   0x200001d0      0x100
-                0x200002d0                . = (. + _Minimum_Stack_Size)
- *fill*         0x200001d0      0x100 
+._check_stack   0x200001cc      0x100
+                0x200002cc                . = (. + _Minimum_Stack_Size)
+ *fill*         0x200001cc      0x100 
 
 .b1text
  *(.b1text)
@@ -17472,7 +17481,7 @@ privileged_functions
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000     0x1098
+.debug_aranges  0x00000000     0x10b8
  *(.debug_aranges)
  .debug_aranges
                 0x00000000       0xc0 ./system/src/stm32f4-hal/stm32f4xx_hal.o
@@ -17519,28 +17528,28 @@ privileged_functions
  .debug_aranges
                 0x000008d8       0x28 ./src/lcd.o
  .debug_aranges
-                0x00000900       0x68 ./src/main.o
+                0x00000900       0x88 ./src/main.o
  .debug_aranges
-                0x00000968       0x20 ./src/system_support.o
+                0x00000988       0x20 ./src/system_support.o
  .debug_aranges
-                0x00000988       0x40 ./FreeRTOS/source/list.o
+                0x000009a8       0x40 ./FreeRTOS/source/list.o
  .debug_aranges
-                0x000009c8       0xd8 ./FreeRTOS/source/queue.o
+                0x000009e8       0xd8 ./FreeRTOS/source/queue.o
  .debug_aranges
-                0x00000aa0      0x1a0 ./FreeRTOS/source/tasks.o
+                0x00000ac0      0x1a0 ./FreeRTOS/source/tasks.o
  .debug_aranges
-                0x00000c40       0x98 ./FreeRTOS/source/timers.o
+                0x00000c60       0x98 ./FreeRTOS/source/timers.o
  .debug_aranges
-                0x00000cd8       0x38 ./FreeRTOS/MemoryManager/heap_tlsf.o
+                0x00000cf8       0x38 ./FreeRTOS/MemoryManager/heap_tlsf.o
  .debug_aranges
-                0x00000d10      0x210 ./FreeRTOS/MemoryManager/tlsf.o
+                0x00000d30      0x210 ./FreeRTOS/MemoryManager/tlsf.o
  .debug_aranges
-                0x00000f20      0x178 ./FreeRTOS/ARM_CM3_MPU/port.o
+                0x00000f40      0x178 ./FreeRTOS/ARM_CM3_MPU/port.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000    0x1a05c
+.debug_info     0x00000000    0x1a495
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x90e ./system/src/stm32f4-hal/stm32f4xx_hal.o
  .debug_info    0x0000090e     0x1112 ./system/src/stm32f4-hal/stm32f4xx_hal_cortex.o
@@ -17564,17 +17573,17 @@ privileged_functions
  .debug_info    0x000097ba     0x1765 ./system/STM324xG_EVAL/stm324xg_eval_lcd.o
  .debug_info    0x0000af1f      0x227 ./src/button.o
  .debug_info    0x0000b146      0x2b9 ./src/lcd.o
- .debug_info    0x0000b3ff     0x6652 ./src/main.o
- .debug_info    0x00011a51      0x294 ./src/system_support.o
- .debug_info    0x00011ce5      0x29a ./FreeRTOS/source/list.o
- .debug_info    0x00011f7f     0x11bd ./FreeRTOS/source/queue.o
- .debug_info    0x0001313c     0x1e7b ./FreeRTOS/source/tasks.o
- .debug_info    0x00014fb7      0xe51 ./FreeRTOS/source/timers.o
- .debug_info    0x00015e08      0x292 ./FreeRTOS/MemoryManager/heap_tlsf.o
- .debug_info    0x0001609a     0x2b64 ./FreeRTOS/MemoryManager/tlsf.o
- .debug_info    0x00018bfe     0x145e ./FreeRTOS/ARM_CM3_MPU/port.o
+ .debug_info    0x0000b3ff     0x6a8b ./src/main.o
+ .debug_info    0x00011e8a      0x294 ./src/system_support.o
+ .debug_info    0x0001211e      0x29a ./FreeRTOS/source/list.o
+ .debug_info    0x000123b8     0x11bd ./FreeRTOS/source/queue.o
+ .debug_info    0x00013575     0x1e7b ./FreeRTOS/source/tasks.o
+ .debug_info    0x000153f0      0xe51 ./FreeRTOS/source/timers.o
+ .debug_info    0x00016241      0x292 ./FreeRTOS/MemoryManager/heap_tlsf.o
+ .debug_info    0x000164d3     0x2b64 ./FreeRTOS/MemoryManager/tlsf.o
+ .debug_info    0x00019037     0x145e ./FreeRTOS/ARM_CM3_MPU/port.o
 
-.debug_abbrev   0x00000000     0x3d23
+.debug_abbrev   0x00000000     0x3d6b
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x25b ./system/src/stm32f4-hal/stm32f4xx_hal.o
  .debug_abbrev  0x0000025b      0x2fc ./system/src/stm32f4-hal/stm32f4xx_hal_cortex.o
@@ -17598,17 +17607,17 @@ privileged_functions
  .debug_abbrev  0x00001dc6      0x2ef ./system/STM324xG_EVAL/stm324xg_eval_lcd.o
  .debug_abbrev  0x000020b5      0x115 ./src/button.o
  .debug_abbrev  0x000021ca      0x149 ./src/lcd.o
- .debug_abbrev  0x00002313      0x964 ./src/main.o
- .debug_abbrev  0x00002c77      0x10b ./src/system_support.o
- .debug_abbrev  0x00002d82       0xdf ./FreeRTOS/source/list.o
- .debug_abbrev  0x00002e61      0x214 ./FreeRTOS/source/queue.o
- .debug_abbrev  0x00003075      0x30e ./FreeRTOS/source/tasks.o
- .debug_abbrev  0x00003383      0x266 ./FreeRTOS/source/timers.o
- .debug_abbrev  0x000035e9      0x159 ./FreeRTOS/MemoryManager/heap_tlsf.o
- .debug_abbrev  0x00003742      0x339 ./FreeRTOS/MemoryManager/tlsf.o
- .debug_abbrev  0x00003a7b      0x2a8 ./FreeRTOS/ARM_CM3_MPU/port.o
+ .debug_abbrev  0x00002313      0x9ac ./src/main.o
+ .debug_abbrev  0x00002cbf      0x10b ./src/system_support.o
+ .debug_abbrev  0x00002dca       0xdf ./FreeRTOS/source/list.o
+ .debug_abbrev  0x00002ea9      0x214 ./FreeRTOS/source/queue.o
+ .debug_abbrev  0x000030bd      0x30e ./FreeRTOS/source/tasks.o
+ .debug_abbrev  0x000033cb      0x266 ./FreeRTOS/source/timers.o
+ .debug_abbrev  0x00003631      0x159 ./FreeRTOS/MemoryManager/heap_tlsf.o
+ .debug_abbrev  0x0000378a      0x339 ./FreeRTOS/MemoryManager/tlsf.o
+ .debug_abbrev  0x00003ac3      0x2a8 ./FreeRTOS/ARM_CM3_MPU/port.o
 
-.debug_line     0x00000000     0xe405
+.debug_line     0x00000000     0xe4cd
  *(.debug_line)
  .debug_line    0x00000000      0xa53 ./system/src/stm32f4-hal/stm32f4xx_hal.o
  .debug_line    0x00000a53      0xb32 ./system/src/stm32f4-hal/stm32f4xx_hal_cortex.o
@@ -17632,17 +17641,17 @@ privileged_functions
  .debug_line    0x000080c5      0xd4c ./system/STM324xG_EVAL/stm324xg_eval_lcd.o
  .debug_line    0x00008e11      0x94f ./src/button.o
  .debug_line    0x00009760      0x941 ./src/lcd.o
- .debug_line    0x0000a0a1     0x1383 ./src/main.o
- .debug_line    0x0000b424      0x8c9 ./src/system_support.o
- .debug_line    0x0000bced      0x325 ./FreeRTOS/source/list.o
- .debug_line    0x0000c012      0x621 ./FreeRTOS/source/queue.o
- .debug_line    0x0000c633      0x8fe ./FreeRTOS/source/tasks.o
- .debug_line    0x0000cf31      0x442 ./FreeRTOS/source/timers.o
- .debug_line    0x0000d373      0x1d4 ./FreeRTOS/MemoryManager/heap_tlsf.o
- .debug_line    0x0000d547      0x914 ./FreeRTOS/MemoryManager/tlsf.o
- .debug_line    0x0000de5b      0x5aa ./FreeRTOS/ARM_CM3_MPU/port.o
+ .debug_line    0x0000a0a1     0x144b ./src/main.o
+ .debug_line    0x0000b4ec      0x8c9 ./src/system_support.o
+ .debug_line    0x0000bdb5      0x325 ./FreeRTOS/source/list.o
+ .debug_line    0x0000c0da      0x621 ./FreeRTOS/source/queue.o
+ .debug_line    0x0000c6fb      0x8fe ./FreeRTOS/source/tasks.o
+ .debug_line    0x0000cff9      0x442 ./FreeRTOS/source/timers.o
+ .debug_line    0x0000d43b      0x1d4 ./FreeRTOS/MemoryManager/heap_tlsf.o
+ .debug_line    0x0000d60f      0x914 ./FreeRTOS/MemoryManager/tlsf.o
+ .debug_line    0x0000df23      0x5aa ./FreeRTOS/ARM_CM3_MPU/port.o
 
-.debug_frame    0x00000000     0x6f4c
+.debug_frame    0x00000000     0x6fb8
  *(.debug_frame)
  .debug_frame   0x00000000      0x188 ./system/src/stm32f4-hal/stm32f4xx_hal.o
  .debug_frame   0x00000188      0x17c ./system/src/stm32f4-hal/stm32f4xx_hal_cortex.o
@@ -17665,34 +17674,34 @@ privileged_functions
  .debug_frame   0x00001230      0x420 ./system/STM324xG_EVAL/stm324xg_eval_lcd.o
  .debug_frame   0x00001650       0x48 ./src/button.o
  .debug_frame   0x00001698       0x44 ./src/lcd.o
- .debug_frame   0x000016dc      0x12c ./src/main.o
- .debug_frame   0x00001808       0x28 ./src/system_support.o
- .debug_frame   0x00001830       0x6c ./FreeRTOS/source/list.o
- .debug_frame   0x0000189c      0x288 ./FreeRTOS/source/queue.o
- .debug_frame   0x00001b24      0x500 ./FreeRTOS/source/tasks.o
- .debug_frame   0x00002024      0x1cc ./FreeRTOS/source/timers.o
- .debug_frame   0x000021f0       0x74 ./FreeRTOS/MemoryManager/heap_tlsf.o
- .debug_frame   0x00002264      0x61c ./FreeRTOS/MemoryManager/tlsf.o
- .debug_frame   0x00002880      0x480 ./FreeRTOS/ARM_CM3_MPU/port.o
- .debug_frame   0x00002d00     0x1f10 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(wlocale-inst.o)
- .debug_frame   0x00004c10     0x1f34 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(locale-inst.o)
- .debug_frame   0x00006b44       0x20 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-errno.o)
- .debug_frame   0x00006b64       0x28 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-memchr.o)
- .debug_frame   0x00006b8c       0x28 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-memcpy.o)
- .debug_frame   0x00006bb4       0x28 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-memmove.o)
- .debug_frame   0x00006bdc       0x20 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-memset.o)
- .debug_frame   0x00006bfc       0x2c c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-nano-freer.o)
- .debug_frame   0x00006c28       0x2c c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-nano-mallocr.o)
- .debug_frame   0x00006c54       0x2c c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-sbrkr.o)
- .debug_frame   0x00006c80       0x20 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-strlen.o)
- .debug_frame   0x00006ca0       0x50 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-vsnprintf.o)
- .debug_frame   0x00006cf0       0x8c c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-nano-svfprintf.o)
- .debug_frame   0x00006d7c       0x58 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-nano-vfprintf_i.o)
- .debug_frame   0x00006dd4      0x11c c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-findfp.o)
- .debug_frame   0x00006ef0       0x3c c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-nano-reallocr.o)
- .debug_frame   0x00006f2c       0x20 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-nano-msizer.o)
+ .debug_frame   0x000016dc      0x198 ./src/main.o
+ .debug_frame   0x00001874       0x28 ./src/system_support.o
+ .debug_frame   0x0000189c       0x6c ./FreeRTOS/source/list.o
+ .debug_frame   0x00001908      0x288 ./FreeRTOS/source/queue.o
+ .debug_frame   0x00001b90      0x500 ./FreeRTOS/source/tasks.o
+ .debug_frame   0x00002090      0x1cc ./FreeRTOS/source/timers.o
+ .debug_frame   0x0000225c       0x74 ./FreeRTOS/MemoryManager/heap_tlsf.o
+ .debug_frame   0x000022d0      0x61c ./FreeRTOS/MemoryManager/tlsf.o
+ .debug_frame   0x000028ec      0x480 ./FreeRTOS/ARM_CM3_MPU/port.o
+ .debug_frame   0x00002d6c     0x1f10 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(wlocale-inst.o)
+ .debug_frame   0x00004c7c     0x1f34 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libstdc++_nano.a(locale-inst.o)
+ .debug_frame   0x00006bb0       0x20 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-errno.o)
+ .debug_frame   0x00006bd0       0x28 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-memchr.o)
+ .debug_frame   0x00006bf8       0x28 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-memcpy.o)
+ .debug_frame   0x00006c20       0x28 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-memmove.o)
+ .debug_frame   0x00006c48       0x20 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-memset.o)
+ .debug_frame   0x00006c68       0x2c c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-nano-freer.o)
+ .debug_frame   0x00006c94       0x2c c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-nano-mallocr.o)
+ .debug_frame   0x00006cc0       0x2c c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-sbrkr.o)
+ .debug_frame   0x00006cec       0x20 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-strlen.o)
+ .debug_frame   0x00006d0c       0x50 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-vsnprintf.o)
+ .debug_frame   0x00006d5c       0x8c c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-nano-svfprintf.o)
+ .debug_frame   0x00006de8       0x58 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-nano-vfprintf_i.o)
+ .debug_frame   0x00006e40      0x11c c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-findfp.o)
+ .debug_frame   0x00006f5c       0x3c c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-nano-reallocr.o)
+ .debug_frame   0x00006f98       0x20 c:/tools/arm/gcc/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7e-m\libg_nano.a(lib_a-nano-msizer.o)
 
-.debug_str      0x00000000    0xb3c49
+.debug_str      0x00000000    0xb3d2d
  *(.debug_str)
  .debug_str     0x00000000    0x9dfa3 ./system/src/stm32f4-hal/stm32f4xx_hal.o
                               0x9e421 (size before relaxing)
@@ -17738,26 +17747,26 @@ privileged_functions
                               0x9f6cd (size before relaxing)
  .debug_str     0x000a5b12       0x77 ./src/lcd.o
                               0x9f6b0 (size before relaxing)
- .debug_str     0x000a5b89     0xa2a5 ./src/main.o
-                              0xaa83c (size before relaxing)
- .debug_str     0x000afe2e       0x50 ./src/system_support.o
+ .debug_str     0x000a5b89     0xa389 ./src/main.o
+                              0xaa934 (size before relaxing)
+ .debug_str     0x000aff12       0x50 ./src/system_support.o
                               0x9dbab (size before relaxing)
- .debug_str     0x000afe7e      0x130 ./FreeRTOS/source/list.o
+ .debug_str     0x000aff62      0x130 ./FreeRTOS/source/list.o
                                0x951a (size before relaxing)
- .debug_str     0x000affae     0x113e ./FreeRTOS/source/queue.o
+ .debug_str     0x000b0092     0x113e ./FreeRTOS/source/queue.o
                                0xa447 (size before relaxing)
- .debug_str     0x000b10ec     0x1734 ./FreeRTOS/source/tasks.o
+ .debug_str     0x000b11d0     0x1734 ./FreeRTOS/source/tasks.o
                                0xada1 (size before relaxing)
- .debug_str     0x000b2820      0x335 ./FreeRTOS/source/timers.o
+ .debug_str     0x000b2904      0x335 ./FreeRTOS/source/timers.o
                                0xa9d4 (size before relaxing)
- .debug_str     0x000b2b55       0xc6 ./FreeRTOS/MemoryManager/heap_tlsf.o
+ .debug_str     0x000b2c39       0xc6 ./FreeRTOS/MemoryManager/heap_tlsf.o
                                0x6ec5 (size before relaxing)
- .debug_str     0x000b2c1b      0x7a7 ./FreeRTOS/MemoryManager/tlsf.o
+ .debug_str     0x000b2cff      0x7a7 ./FreeRTOS/MemoryManager/tlsf.o
                                0x3a44 (size before relaxing)
- .debug_str     0x000b33c2      0x887 ./FreeRTOS/ARM_CM3_MPU/port.o
+ .debug_str     0x000b34a6      0x887 ./FreeRTOS/ARM_CM3_MPU/port.o
                                0x87f9 (size before relaxing)
 
-.debug_loc      0x00000000     0xb417
+.debug_loc      0x00000000     0xb5f7
  *(.debug_loc)
  .debug_loc     0x00000000       0x90 ./system/src/stm32f4-hal/stm32f4xx_hal.o
  .debug_loc     0x00000090      0x61b ./system/src/stm32f4-hal/stm32f4xx_hal_cortex.o
@@ -17776,15 +17785,15 @@ privileged_functions
  .debug_loc     0x00002c3e      0x907 ./system/STM324xG_EVAL/stm324xg_eval.o
  .debug_loc     0x00003545     0x1b51 ./system/STM324xG_EVAL/stm324xg_eval_lcd.o
  .debug_loc     0x00005096       0x3c ./src/lcd.o
- .debug_loc     0x000050d2      0xb50 ./src/main.o
- .debug_loc     0x00005c22       0x13 ./src/system_support.o
- .debug_loc     0x00005c35       0x65 ./FreeRTOS/source/list.o
- .debug_loc     0x00005c9a      0xcc9 ./FreeRTOS/source/queue.o
- .debug_loc     0x00006963     0x1346 ./FreeRTOS/source/tasks.o
- .debug_loc     0x00007ca9      0x89b ./FreeRTOS/source/timers.o
- .debug_loc     0x00008544      0x102 ./FreeRTOS/MemoryManager/heap_tlsf.o
- .debug_loc     0x00008646     0x1fdf ./FreeRTOS/MemoryManager/tlsf.o
- .debug_loc     0x0000a625      0xdf2 ./FreeRTOS/ARM_CM3_MPU/port.o
+ .debug_loc     0x000050d2      0xd30 ./src/main.o
+ .debug_loc     0x00005e02       0x13 ./src/system_support.o
+ .debug_loc     0x00005e15       0x65 ./FreeRTOS/source/list.o
+ .debug_loc     0x00005e7a      0xcc9 ./FreeRTOS/source/queue.o
+ .debug_loc     0x00006b43     0x1346 ./FreeRTOS/source/tasks.o
+ .debug_loc     0x00007e89      0x89b ./FreeRTOS/source/timers.o
+ .debug_loc     0x00008724      0x102 ./FreeRTOS/MemoryManager/heap_tlsf.o
+ .debug_loc     0x00008826     0x1fdf ./FreeRTOS/MemoryManager/tlsf.o
+ .debug_loc     0x0000a805      0xdf2 ./FreeRTOS/ARM_CM3_MPU/port.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -17802,7 +17811,7 @@ privileged_functions
  *(.debug_varnames)
 OUTPUT(rzs2_stm32f4.elf elf32-littlearm)
 
-.debug_ranges   0x00000000      0xf20
+.debug_ranges   0x00000000      0xf40
  .debug_ranges  0x00000000       0xb0 ./system/src/stm32f4-hal/stm32f4xx_hal.o
  .debug_ranges  0x000000b0       0x88 ./system/src/stm32f4-hal/stm32f4xx_hal_cortex.o
  .debug_ranges  0x00000138       0x48 ./system/src/stm32f4-hal/stm32f4xx_hal_gpio.o
@@ -17824,15 +17833,15 @@ OUTPUT(rzs2_stm32f4.elf elf32-littlearm)
  .debug_ranges  0x00000670      0x120 ./system/STM324xG_EVAL/stm324xg_eval_lcd.o
  .debug_ranges  0x00000790       0x20 ./src/button.o
  .debug_ranges  0x000007b0       0x18 ./src/lcd.o
- .debug_ranges  0x000007c8       0x58 ./src/main.o
- .debug_ranges  0x00000820       0x10 ./src/system_support.o
- .debug_ranges  0x00000830       0x30 ./FreeRTOS/source/list.o
- .debug_ranges  0x00000860       0xc8 ./FreeRTOS/source/queue.o
- .debug_ranges  0x00000928      0x1c8 ./FreeRTOS/source/tasks.o
- .debug_ranges  0x00000af0       0x88 ./FreeRTOS/source/timers.o
- .debug_ranges  0x00000b78       0x28 ./FreeRTOS/MemoryManager/heap_tlsf.o
- .debug_ranges  0x00000ba0      0x218 ./FreeRTOS/MemoryManager/tlsf.o
- .debug_ranges  0x00000db8      0x168 ./FreeRTOS/ARM_CM3_MPU/port.o
+ .debug_ranges  0x000007c8       0x78 ./src/main.o
+ .debug_ranges  0x00000840       0x10 ./src/system_support.o
+ .debug_ranges  0x00000850       0x30 ./FreeRTOS/source/list.o
+ .debug_ranges  0x00000880       0xc8 ./FreeRTOS/source/queue.o
+ .debug_ranges  0x00000948      0x1c8 ./FreeRTOS/source/tasks.o
+ .debug_ranges  0x00000b10       0x88 ./FreeRTOS/source/timers.o
+ .debug_ranges  0x00000b98       0x28 ./FreeRTOS/MemoryManager/heap_tlsf.o
+ .debug_ranges  0x00000bc0      0x218 ./FreeRTOS/MemoryManager/tlsf.o
+ .debug_ranges  0x00000dd8      0x168 ./FreeRTOS/ARM_CM3_MPU/port.o
 
 .debug_macro    0x00000000    0x1efca
  .debug_macro   0x00000000      0x473 ./system/src/stm32f4-hal/stm32f4xx_hal.o

@@ -24,6 +24,17 @@
 
 volatile int stuff;
 
+class job_descriptor
+{
+public:
+unsigned time;
+Led_TypeDef led;
+job_descriptor(unsigned timein, Led_TypeDef ledin)
+	{
+		time = timein;
+		led = ledin;
+	}
+};
 
 void init_system (void);
 
@@ -47,8 +58,6 @@ void test_task (void *)
 void led1_task (void *)
 {
   BSP_LED_Init (LED4);
-  TickType_t xLastWakeTime;
-  xLastWakeTime = xTaskGetTickCount();
   while (true)
     {
 	  stuff = 0;
@@ -68,8 +77,6 @@ void led1_task (void *)
 void led2_task (void *)
 {
   BSP_LED_Init (LED3);
-  TickType_t xLastWakeTime;
-  xLastWakeTime = xTaskGetTickCount();
   while (true)
     {
 	  stuff = 0;
@@ -112,8 +119,6 @@ void lcd_task (void *)
 void led1_task_timeslicing (void *)
 {
   BSP_LED_Init (LED4);
-  TickType_t xLastWakeTime;
-  xLastWakeTime = xTaskGetTickCount();
   while (true)
     {
 	  stuff = 0;
@@ -133,8 +138,6 @@ void led1_task_timeslicing (void *)
 void led2_task_timeslicing (void *)
 {
   BSP_LED_Init (LED3);
-  TickType_t xLastWakeTime;
-  xLastWakeTime = xTaskGetTickCount();
   while (true)
     {
 	  stuff = 0;
@@ -154,8 +157,6 @@ void led2_task_timeslicing (void *)
 void led3_task_timeslicing (void *)
 {
   BSP_LED_Init (LED2);
-  TickType_t xLastWakeTime;
-  xLastWakeTime = xTaskGetTickCount();
   while (true)
     {
 	  stuff = 0;
@@ -172,7 +173,77 @@ void led3_task_timeslicing (void *)
     }
 }
 
+void blink1_task( void * data)
+{
+	job_descriptor* my_job = (job_descriptor *)data; // type cast of generic pointer
+	BSP_LED_Init( my_job->led);
+	TickType_t xLastWakeTime;
+	xLastWakeTime = xTaskGetTickCount();
+	while (true)
+	{
+		BSP_LED_Toggle(my_job->led);
+		// Task wird erst in 100 Ticks weiter ausgeführt
+		//vTaskDelay ((int)1000/3);
+		vTaskDelayUntil (&xLastWakeTime, (TickType_t) my_job->time);
+		BSP_LED_Toggle(my_job->led);
+		//vTaskDelay ((int)2000/3);
+		vTaskDelayUntil (&xLastWakeTime, (TickType_t) my_job->time);
+	}
+}
 
+void blink2_task( void * data)
+{
+	job_descriptor* my_job = (job_descriptor *)data; // type cast of generic pointer
+	BSP_LED_Init( my_job->led);
+	TickType_t xLastWakeTime;
+	xLastWakeTime = xTaskGetTickCount();
+	while (true)
+	{
+		BSP_LED_Toggle(my_job->led);
+		// Task wird erst in 100 Ticks weiter ausgeführt
+		//vTaskDelay ((int)1000/3);
+		vTaskDelayUntil (&xLastWakeTime, (TickType_t) my_job->time);
+		BSP_LED_Toggle(my_job->led);
+		//vTaskDelay ((int)2000/3);
+		vTaskDelayUntil (&xLastWakeTime, (TickType_t) my_job->time);
+	}
+}
+
+void blink3_task( void * data)
+{
+	job_descriptor* my_job = (job_descriptor *)data; // type cast of generic pointer
+	BSP_LED_Init( my_job->led);
+	TickType_t xLastWakeTime;
+	xLastWakeTime = xTaskGetTickCount();
+	while (true)
+	{
+		BSP_LED_Toggle(my_job->led);
+		// Task wird erst in 100 Ticks weiter ausgeführt
+		//vTaskDelay ((int)1000/3);
+		vTaskDelayUntil (&xLastWakeTime, (TickType_t) my_job->time);
+		BSP_LED_Toggle(my_job->led);
+		//vTaskDelay ((int)2000/3);
+		vTaskDelayUntil (&xLastWakeTime, (TickType_t) my_job->time);
+	}
+}
+
+void blink4_task( void * data)
+{
+	job_descriptor* my_job = (job_descriptor *)data; // type cast of generic pointer
+	BSP_LED_Init( my_job->led);
+	TickType_t xLastWakeTime;
+	xLastWakeTime = xTaskGetTickCount();
+	while (true)
+	{
+		BSP_LED_Toggle(my_job->led);
+		// Task wird erst in 100 Ticks weiter ausgeführt
+		//vTaskDelay ((int)1000/3);
+		vTaskDelayUntil (&xLastWakeTime, (TickType_t) my_job->time);
+		BSP_LED_Toggle(my_job->led);
+		//vTaskDelay ((int)2000/3);
+		vTaskDelayUntil (&xLastWakeTime, (TickType_t) my_job->time);
+	}
+}
 
 #define LED_TASK_PRIORITY ((1 + tskIDLE_PRIORITY) | portPRIVILEGE_BIT)
 #define LCD_TASK_PRIORITY ((1 + tskIDLE_PRIORITY) | portPRIVILEGE_BIT)
@@ -185,7 +256,7 @@ main (void)
   HAL_Init ();
 
   lcd_init ();
-  lcd_write_line (0, "Hello FreeRTOS");
+  lcd_write_line (0, (char *) "Hello FreeRTOS");
 
   //xTaskCreate( (pdTASK_CODE)test_task, 	"test", configMINIMAL_STACK_SIZE, 0, TEST_TASK_PRIORITY, NULL);
 
@@ -193,9 +264,22 @@ main (void)
   //xTaskCreate( (pdTASK_CODE)led2_task, 	"led2", 256, 0, LED_TASK_PRIORITY, NULL);
   //xTaskCreate( (pdTASK_CODE)lcd_task, 	"lcd", 256, 0, LCD_TASK_PRIORITY, NULL);
 
-  xTaskCreate( (pdTASK_CODE)led1_task_timeslicing, 	"led1", 256, 0, LED_TASK_PRIORITY, NULL);
-  xTaskCreate( (pdTASK_CODE)led2_task_timeslicing, 	"led1", 256, 0, LED_TASK_PRIORITY, NULL);
-  xTaskCreate( (pdTASK_CODE)led3_task_timeslicing, 	"led1", 256, 0, LED_TASK_PRIORITY, NULL);
+  //xTaskCreate( (pdTASK_CODE)led1_task_timeslicing, 	"led1", 256, 0, LED_TASK_PRIORITY, NULL);
+  //xTaskCreate( (pdTASK_CODE)led2_task_timeslicing, 	"led1", 256, 0, LED_TASK_PRIORITY, NULL);
+  //xTaskCreate( (pdTASK_CODE)led3_task_timeslicing, 	"led1", 256, 0, LED_TASK_PRIORITY, NULL);
+
+  job_descriptor blink1_job_descriptor = job_descriptor(1000/3, LED1);
+  xTaskCreate( (pdTASK_CODE)blink1_task, 	"led1", 256, &blink1_job_descriptor, LED_TASK_PRIORITY, NULL);
+
+  job_descriptor blink2_job_descriptor = job_descriptor(2000/3, LED2);
+  xTaskCreate( (pdTASK_CODE)blink2_task, 	"led2", 256, &blink2_job_descriptor, LED_TASK_PRIORITY, NULL);
+
+  job_descriptor blink3_job_descriptor = job_descriptor(3000/3, LED3);
+  xTaskCreate( (pdTASK_CODE)blink3_task, 	"led3", 256, &blink3_job_descriptor, LED_TASK_PRIORITY, NULL);
+
+  job_descriptor blink4_job_descriptor = job_descriptor(4000/3, LED4);
+  xTaskCreate( (pdTASK_CODE)blink4_task, 	"led4", 256, &blink4_job_descriptor, LED_TASK_PRIORITY, NULL);
 
   vTaskStartScheduler ();
+  return 0;
 }
