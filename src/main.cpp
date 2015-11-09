@@ -21,16 +21,21 @@
 
 void init_system (void);
 
+
 void test_task (void *)
 {
   BSP_LED_Init (LED1);
+  TickType_t xLastWakeTime;
+  xLastWakeTime = xTaskGetTickCount();
   while (true)
     {
       BSP_LED_Toggle(LED1);
       // Task wird erst in 100 Ticks weiter ausgeführt
-      vTaskDelay ((int)1000/3);
+      //vTaskDelay ((int)1000/3);
+      vTaskDelayUntil (&xLastWakeTime, (TickType_t) 1000/3);
       BSP_LED_Toggle(LED1);
-      vTaskDelay ((int)2000/3);
+      //vTaskDelay ((int)2000/3);
+      vTaskDelayUntil (&xLastWakeTime, (TickType_t) 2000/3);
     }
 }
 
