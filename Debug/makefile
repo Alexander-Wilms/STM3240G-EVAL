@@ -65,7 +65,7 @@ all: rzs2_stm32f4.elf secondary-outputs
 rzs2_stm32f4.elf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross ARM C++ Linker'
-	arm-none-eabi-g++ -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Og -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -ffreestanding -fno-move-loop-invariants -Wall -Wextra  -g3 -T mem.ld -T sections.ld -nostartfiles -Xlinker --gc-sections -L"/home/mnl/Dokumente/RZS/workspace/rzs2_stm32f4/ldscripts" -Wl,-Map,"rzs2_stm32f4.map" -o "rzs2_stm32f4.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-none-eabi-g++ -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Og -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -ffreestanding -fno-move-loop-invariants -Wall -Wextra  -g3 -T mem.ld -T sections.ld -nostartfiles -Xlinker --gc-sections -L"C:\Labor_2_RZS\rzs2_stm32f4\ldscripts" -Wl,-Map,"rzs2_stm32f4.map" --specs=nano.specs -o "rzs2_stm32f4.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 

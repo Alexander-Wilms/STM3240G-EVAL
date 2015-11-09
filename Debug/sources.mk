@@ -27,14 +27,14 @@ CPP_DEPS :=
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \
-FreeRTOS/ARM_CM3_MPU \
-FreeRTOS/MemoryManager \
-FreeRTOS/source \
-src \
-system/STM324xG_EVAL \
-system/src/cmsis \
-system/src/cortexm \
-system/src/diag \
-system/src/newlib \
 system/src/stm32f4-hal \
+system/src/newlib \
+system/src/diag \
+system/src/cortexm \
+system/src/cmsis \
+system/STM324xG_EVAL \
+src \
+FreeRTOS/source \
+FreeRTOS/MemoryManager \
+FreeRTOS/ARM_CM3_MPU \
 

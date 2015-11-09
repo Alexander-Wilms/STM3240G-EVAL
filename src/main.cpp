@@ -27,9 +27,10 @@ void test_task (void *)
   while (true)
     {
       BSP_LED_Toggle(LED1);
-      vTaskDelay (100);
+      // Task wird erst in 100 Ticks weiter ausgeführt
+      vTaskDelay ((int)1000/3);
       BSP_LED_Toggle(LED1);
-      vTaskDelay (400);
+      vTaskDelay ((int)2000/3);
     }
 }
 
