@@ -86,8 +86,8 @@ extern uint8_t __FreeRTOS_heap_end__;
 #define USE_STM32F3_RUNTIME_INSTRUMENTATION 0
 #define USE_STM3240G_EVAL_RUNTIME_INSTRUMENTATION 0
 
-#define configUSE_PREEMPTION		0
-#define configUSE_TIME_SLICING 		0
+#define configUSE_PREEMPTION		1
+#define configUSE_TIME_SLICING 		1
 #define configUSE_IDLE_HOOK		0
 #define configUSE_TICK_HOOK		0
 
