@@ -9,5 +9,5 @@
 
 void lcd_init( void);
 void lcd_write_line( unsigned line, char * text);
-
+//extern SemaphoreHandle_t xSemaphore;
 #endif /* LCD_H_ */
