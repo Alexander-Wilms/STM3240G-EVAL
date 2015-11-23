@@ -11,10 +11,12 @@
 
 #include "FreeRTOS.h"
 #include "task.h"
+#include "semphr.h"
 
 ROM char message[]="hello via UART\r\n";
 
 extern TaskHandle_t LCDTaskHandle;
+extern SemaphoreHandle_t xSemaphore;
 // extern QueueHandle_t xQueue;
 
 /** @brief  demo task demonstrating USART usage */
@@ -32,12 +34,12 @@ void uart_task( void *)
 		uart3.puts( (const char *)buffer);
 
 		// LCD-Task resumen
-		vTaskResume(LCDTaskHandle);
+		// vTaskResume(LCDTaskHandle);
 
-		/*if( xSemaphore != NULL )
+		if( xSemaphore != NULL )
 		{
 			xSemaphoreGive( xSemaphore );
-		}*/
+		}
 
 		/*if( xQueue != 0 )
 		{

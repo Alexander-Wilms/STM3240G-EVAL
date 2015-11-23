@@ -7,6 +7,7 @@
 
 #include "FreeRTOS.h"
 #include "task.h"
+#include "semphr.h"
 
 #include <string.h>
 #include <string>
@@ -15,6 +16,7 @@
 volatile uint16_t TextColor, BackColor; // globals needed by LCD driver
 
 extern TaskHandle_t LCDTaskHandle;
+extern SemaphoreHandle_t xSemaphore;
 // extern QueueHandle_t xQueue;
 
 /** @brief LCD initialization
@@ -51,10 +53,10 @@ bargraph_task (void *)
 
 	while (true)
 	{
-		//	if( xSemaphore != NULL )
-		//	{
-		//		if( xSemaphoreTake( xSemaphore, ( TickType_t ) 10 ) == pdTRUE )
-		//		{
+			if( xSemaphore != NULL )
+			{
+				if( xSemaphoreTake( xSemaphore, ( TickType_t ) 10 ) == pdTRUE )
+				{
 
 		for (uint16_t width = 0; width < 320; ++width)
 		{
@@ -74,10 +76,10 @@ bargraph_task (void *)
 		}
 		// vTaskDelay(333);
 
-		// }}
+		 }}
 
 		// bargraph_task suspendieren
-		vTaskSuspend(0);
+		// vTaskSuspend(0);
 	}
 }
 

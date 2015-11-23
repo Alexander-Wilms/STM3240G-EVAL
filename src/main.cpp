@@ -11,7 +11,7 @@
 #include "stm324xg_eval_io.h"
 #include "stm324xg_eval_ts.h"
 #include "stm324xg_eval_lcd.h"
-// #include "semphr.h"
+
 // #include "queue.h"
 // #include <string>
 // #include <sstream>
@@ -21,6 +21,7 @@
 
 #include "FreeRTOS.h"
 #include "task.h"
+#include "semphr.h"
 
 void init_system (void);
 void bargraph_task(void *);
@@ -168,7 +169,7 @@ void lcd_zeit (void *)
 
 #define TASK_PRIORITY (1 | portPRIVILEGE_BIT)
 TaskHandle_t LCDTaskHandle;
-// SemaphoreHandle_t xSemaphore = NULL;
+SemaphoreHandle_t xSemaphore = NULL;
 // QueueHandle_t xQueue;
 // SemaphoreHandle_t xSemaphoreMutex;
 
@@ -178,7 +179,7 @@ void main (void)
   init_system ();
   HAL_Init ();
 
-  // xSemaphore = xSemaphoreCreateBinary();
+  xSemaphore = xSemaphoreCreateBinary();
   // xQueue = xQueueCreate( 15, sizeof( char *) );
 
   xTaskCreate( (pdTASK_CODE)uart_task, 	   "uart",     configMINIMAL_STACK_SIZE, 0, TASK_PRIORITY, NULL);
