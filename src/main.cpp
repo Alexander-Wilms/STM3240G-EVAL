@@ -12,7 +12,6 @@
 #include "stm324xg_eval_ts.h"
 #include "stm324xg_eval_lcd.h"
 
-// #include "queue.h"
 // #include <string>
 // #include <sstream>
 
@@ -22,10 +21,13 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "semphr.h"
+#include "queue.h"
+
+// Fehler war: semphr nach FreeRTOS inkludieren
 
 void init_system (void);
 void bargraph_task(void *);
-// void laufschrift_task(void *);
+void laufschrift_task(void *);
 void uart_task( void *);
 void test_task (void *);
 // void lcd_balkenanzeige (void *);
@@ -169,8 +171,8 @@ void lcd_zeit (void *)
 
 #define TASK_PRIORITY (1 | portPRIVILEGE_BIT)
 TaskHandle_t LCDTaskHandle;
-SemaphoreHandle_t xSemaphore = NULL;
-// QueueHandle_t xQueue;
+SemaphoreHandle_t xSemaphore;
+QueueHandle_t xQueue;
 // SemaphoreHandle_t xSemaphoreMutex;
 
 /** @brief main function, entry point of the application */
@@ -180,17 +182,17 @@ void main (void)
   HAL_Init ();
 
   xSemaphore = xSemaphoreCreateBinary();
-  // xQueue = xQueueCreate( 15, sizeof( char *) );
+  xQueue = xQueueCreate( 15, sizeof( uint8_t *) );
 
   xTaskCreate( (pdTASK_CODE)uart_task, 	   "uart",     configMINIMAL_STACK_SIZE, 0, TASK_PRIORITY, NULL);
 
-  xTaskCreate( (pdTASK_CODE)test_task, 	   "test",     configMINIMAL_STACK_SIZE, 0, TASK_PRIORITY, NULL);
+  // xTaskCreate( (pdTASK_CODE)test_task, 	   "test",     configMINIMAL_STACK_SIZE, 0, TASK_PRIORITY, NULL);
 
-  xTaskCreate( (pdTASK_CODE)bargraph_task, "bargraph", configMINIMAL_STACK_SIZE, 0, TASK_PRIORITY, &LCDTaskHandle);
+  // xTaskCreate( (pdTASK_CODE)bargraph_task, "bargraph", configMINIMAL_STACK_SIZE, 0, TASK_PRIORITY, &LCDTaskHandle);
 
-  xTaskCreate( (pdTASK_CODE)pushbutton_task, "button", configMINIMAL_STACK_SIZE, 0, TASK_PRIORITY, NULL);
+  // xTaskCreate( (pdTASK_CODE)pushbutton_task, "button", configMINIMAL_STACK_SIZE, 0, TASK_PRIORITY, NULL);
 
-  // xTaskCreate( (pdTASK_CODE)laufschrift_task, 	   "laufschrift",     configMINIMAL_STACK_SIZE, 0, TASK_PRIORITY, NULL);
+  xTaskCreate( (pdTASK_CODE)laufschrift_task, 	   "laufschrift",     configMINIMAL_STACK_SIZE, 0, TASK_PRIORITY, NULL);
 
   //xTaskCreate( (pdTASK_CODE)lcd_balkenanzeige, "button", configMINIMAL_STACK_SIZE, 0, TASK_PRIORITY, NULL);
   //xTaskCreate( (pdTASK_CODE)lcd_laufschrift, "button", configMINIMAL_STACK_SIZE, 0, TASK_PRIORITY, NULL);
