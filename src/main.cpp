@@ -13,7 +13,7 @@
 #include "stm324xg_eval_lcd.h"
 // #include "semphr.h"
 // #include "queue.h"
-// #inlcude <string>
+// #include <string>
 // #include <sstream>
 
 #include "lcd.h"
@@ -167,7 +167,7 @@ void lcd_zeit (void *)
 }*/
 
 #define TASK_PRIORITY (1 | portPRIVILEGE_BIT)
-// TaskHandle_t LCDTaskHandle;
+TaskHandle_t LCDTaskHandle;
 // SemaphoreHandle_t xSemaphore = NULL;
 // QueueHandle_t xQueue;
 // SemaphoreHandle_t xSemaphoreMutex;
@@ -185,8 +185,7 @@ void main (void)
 
   xTaskCreate( (pdTASK_CODE)test_task, 	   "test",     configMINIMAL_STACK_SIZE, 0, TASK_PRIORITY, NULL);
 
-  xTaskCreate( (pdTASK_CODE)bargraph_task, "bargraph", configMINIMAL_STACK_SIZE, 0, TASK_PRIORITY, NULL);
-  // LCDTaskHandle = bargraph_task
+  xTaskCreate( (pdTASK_CODE)bargraph_task, "bargraph", configMINIMAL_STACK_SIZE, 0, TASK_PRIORITY, &LCDTaskHandle);
 
   xTaskCreate( (pdTASK_CODE)pushbutton_task, "button", configMINIMAL_STACK_SIZE, 0, TASK_PRIORITY, NULL);
 

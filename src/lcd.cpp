@@ -14,7 +14,7 @@
 
 volatile uint16_t TextColor, BackColor; // globals needed by LCD driver
 
-// extern TaskHandle_t LCDTaskHandle;
+extern TaskHandle_t LCDTaskHandle;
 // extern QueueHandle_t xQueue;
 
 /** @brief LCD initialization
@@ -72,12 +72,12 @@ bargraph_task (void *)
 			BSP_LCD_DrawFullRect (width, 50, 320 - width - 1, 10);
 			vTaskDelay (1);
 		}
-		vTaskDelay(333);
+		// vTaskDelay(333);
 
 		// }}
 
 		// bargraph_task suspendieren
-		// vTaskSuspend(0);
+		vTaskSuspend(0);
 	}
 }
 
