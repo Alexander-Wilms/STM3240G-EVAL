@@ -35,6 +35,8 @@ void lcd_write_line( unsigned line, char * text)
 	BSP_LCD_DisplayStringAtLine( LINE(line), (uint8_t *)text);
 }
 
+extern TaskHandle_t TaskHandle;
+
 void
 bargraph_task (void *)
 {
@@ -44,7 +46,8 @@ bargraph_task (void *)
 
   while (true)
     {
-	  oszi_trigger();
+	  //vTaskResume(TaskHandle);
+	  //oszi_trigger();
 	  TickType_t xLastWakeTime;
       for (uint16_t width = 0; width < 320; ++width)
 	{
@@ -53,25 +56,27 @@ bargraph_task (void *)
 	  BSP_LCD_DrawFullRect (0, 50, width, 10);
 	  BSP_LCD_SetTextColor(LCD_COLOR_YELLOW);
 	  BSP_LCD_DrawFullRect (width, 50, 320 - width - 1, 10);
-	  oszi_trigger();
+	  //oszi_trigger();
 	  xLastWakeTime = xTaskGetTickCount();
-	  vTaskDelayUntil (&xLastWakeTime, (TickType_t) 10);
-	  oszi_trigger();
+	  vTaskDelayUntil (&xLastWakeTime, (TickType_t) 7);
+	  vTaskResume(TaskHandle);
+	  //oszi_trigger();
 
 	}
       for (uint16_t width = 319; width > 0; --width)
 	{
-    	  oszi_trigger();
+    	  //oszi_trigger();
 	  BSP_LCD_SetTextColor(LCD_COLOR_RED);
 	  BSP_LCD_DrawFullRect (0, 50, width, 10);
 	  BSP_LCD_SetTextColor(LCD_COLOR_YELLOW);
 	  BSP_LCD_DrawFullRect (width, 50, 320 - width - 1, 10);
-	  oszi_trigger();
+	  //oszi_trigger();
 	  xLastWakeTime = xTaskGetTickCount();
-	  vTaskDelayUntil (&xLastWakeTime, (TickType_t) 10);
-	  oszi_trigger();
+	  vTaskDelayUntil (&xLastWakeTime, (TickType_t) 7);
+	  vTaskResume(TaskHandle);
+	  //oszi_trigger();
 	}
-      oszi_trigger();
+      //oszi_trigger();
 
     }
 }
