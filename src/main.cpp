@@ -36,6 +36,8 @@ void test_task1 (void *)
 	  oszi_trigger();
 	  BSP_LED_Toggle(LED1);
       vTaskDelay (100);
+	  for(int i=0;i<10000;i++)
+		  ;
 	  oszi_trigger();
       BSP_LED_Toggle(LED1);
       vTaskDelay (400);
@@ -83,12 +85,12 @@ int main (void)
 
   init_FreeRTOS_reporting ();
 
-  xTaskCreate( (pdTASK_CODE)test_task1, 	"test", configMINIMAL_STACK_SIZE, 0, TEST_TASK_PRIORITY+4, NULL);
-  xTaskCreate( (pdTASK_CODE)test_task2, 	"test", configMINIMAL_STACK_SIZE, 0, TEST_TASK_PRIORITY+6, NULL);
-  xTaskCreate( (pdTASK_CODE)test_task3, 	"test", configMINIMAL_STACK_SIZE, 0, TEST_TASK_PRIORITY+8, NULL);
+  // xTaskCreate( (pdTASK_CODE)test_task1, 	"test", configMINIMAL_STACK_SIZE, 0, TEST_TASK_PRIORITY+4, NULL);
+  //xTaskCreate( (pdTASK_CODE)test_task2, 	"test", configMINIMAL_STACK_SIZE, 0, TEST_TASK_PRIORITY+6, NULL);
+  //xTaskCreate( (pdTASK_CODE)test_task3, 	"test", configMINIMAL_STACK_SIZE, 0, TEST_TASK_PRIORITY+8, NULL);
   xTaskCreate( (pdTASK_CODE)bargraph_task, 	"test", configMINIMAL_STACK_SIZE, 0, TEST_TASK_PRIORITY+2, NULL);
-  xTaskCreate( (pdTASK_CODE)uart_task, 		"test", configMINIMAL_STACK_SIZE, 0, TEST_TASK_PRIORITY+7, NULL);
-  xTaskCreate( (pdTASK_CODE)pushbutton_task, 		"test", configMINIMAL_STACK_SIZE, 0, TEST_TASK_PRIORITY+7, NULL);
+  // xTaskCreate( (pdTASK_CODE)uart_task, 		"test", configMINIMAL_STACK_SIZE, 0, TEST_TASK_PRIORITY+7, NULL);
+  // xTaskCreate( (pdTASK_CODE)pushbutton_task, 		"test", configMINIMAL_STACK_SIZE, 0, TEST_TASK_PRIORITY+7, NULL);
 
   vTaskStartScheduler ();
 }

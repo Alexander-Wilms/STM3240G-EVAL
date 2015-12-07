@@ -44,22 +44,34 @@ bargraph_task (void *)
 
   while (true)
     {
+	  oszi_trigger();
+	  TickType_t xLastWakeTime;
       for (uint16_t width = 0; width < 320; ++width)
 	{
+    	  oszi_trigger();
 	  BSP_LCD_SetTextColor(LCD_COLOR_RED);
 	  BSP_LCD_DrawFullRect (0, 50, width, 10);
 	  BSP_LCD_SetTextColor(LCD_COLOR_YELLOW);
 	  BSP_LCD_DrawFullRect (width, 50, 320 - width - 1, 10);
-	  vTaskDelay (1);
+	  oszi_trigger();
+	  xLastWakeTime = xTaskGetTickCount();
+	  vTaskDelayUntil (&xLastWakeTime, (TickType_t) 10);
+	  oszi_trigger();
+
 	}
       for (uint16_t width = 319; width > 0; --width)
 	{
+    	  oszi_trigger();
 	  BSP_LCD_SetTextColor(LCD_COLOR_RED);
 	  BSP_LCD_DrawFullRect (0, 50, width, 10);
 	  BSP_LCD_SetTextColor(LCD_COLOR_YELLOW);
 	  BSP_LCD_DrawFullRect (width, 50, 320 - width - 1, 10);
-	  vTaskDelay (1);
+	  oszi_trigger();
+	  xLastWakeTime = xTaskGetTickCount();
+	  vTaskDelayUntil (&xLastWakeTime, (TickType_t) 10);
+	  oszi_trigger();
 	}
-      vTaskDelay(333);
+      oszi_trigger();
+
     }
 }
