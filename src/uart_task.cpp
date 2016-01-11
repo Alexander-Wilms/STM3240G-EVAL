@@ -15,14 +15,16 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
-ROM char message[]="hello via UARTb\r\n";
+ROM char message[]="hello via UART\r\n";
+
+uart uart3;
 
 /** @brief  demo task demonstrating USART usage */
 void uart_task( void *)
 {
 	char output[2] = {0, 0};
   char buffer[30]={0};
-  uart uart3;
+
 
   uart3.puts(message);
 
@@ -39,8 +41,6 @@ void uart_task( void *)
 			if(buffer[i] == '\r')  break;
 			i++;
 		}
-		output[0] = '\n';
-		uart3.puts( (const char *)output);
 		buffer[i]=0;
 
 		BSP_LCD_ClearStringLine(1);

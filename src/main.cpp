@@ -72,9 +72,24 @@ void test_task3 (void *)
     }
 }
 
+COMMON can_driver_t *can;
+
+void can_receive_task (void *)
+{
+	can_driver_t::CANpacket rxcanpk;
+	char canpkchar[] = {0,0};
+	while(true)
+	{
+		can->receive(rxcanpk);
+
+		BSP_LCD_ClearStringLine(1);
+		lcd_write_line(1, (char *) rxcanpk.data_b);
+	}
+}
+
 #define TEST_TASK_PRIORITY (tskIDLE_PRIORITY | portPRIVILEGE_BIT)
 
-COMMON can_driver_t *can;
+
 
 /** @brief main function, entry point of the application */
 void main (void)
@@ -96,6 +111,8 @@ void main (void)
   xTaskCreate( (pdTASK_CODE)pushbutton_task,	"button",configMINIMAL_STACK_SIZE+128, 0, TEST_TASK_PRIORITY+7, NULL);
 
   can = new can_driver_t( 3);
+
+  xTaskCreate( (pdTASK_CODE)can_receive_task, 		"uart",  configMINIMAL_STACK_SIZE, 0, TEST_TASK_PRIORITY+7, NULL);
 
   vTaskStartScheduler ();
 }
