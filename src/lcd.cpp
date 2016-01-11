@@ -32,7 +32,7 @@ void lcd_init( void)
 /** @brief write a single line of text on the LCD */
 void lcd_write_line( unsigned line, char * text)
 {
-	BSP_LCD_DisplayStringAtLine( LINE(line), (uint8_t *)text);
+	BSP_LCD_DisplayStringAtLine( line, (uint8_t *)text);
 }
 
 void
