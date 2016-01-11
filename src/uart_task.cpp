@@ -24,12 +24,11 @@ uart uart3;
 extern COMMON can_driver_t *can;
 
 /** @brief  demo task demonstrating USART usage */
-void uart_task( void *)
+void uart_can_send_task( void *)
 {
 	char output[2] = {0, 0};
 	char canchar[8] = {0};
 	char buffer[30]={0};
-
 
 	can_driver_t::CANpacket txcanpk;
 	txcanpk.dlc = 8;

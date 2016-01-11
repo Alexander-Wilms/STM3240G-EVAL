@@ -24,7 +24,7 @@
 #include "candriver.h"
 
 void init_system (void);
-void uart_task( void *);
+void uart_can_send_task( void *);
 void bargraph_task( void *);
 void pushbutton_task(void *);
 void init_FreeRTOS_reporting( void);
@@ -87,9 +87,21 @@ void can_receive_task (void *)
 	}
 }
 
+double ptone(double kp, double T1, double T, double ek, double vkvorher)
+{
+	return (T1/(T1+T))*vkvorher + kp*(T/(T1+T))*ek;
+}
+
+static volatile int sum;
+
+double pi_stellungsalgorithmus(double kp, double TN, double T, double ek)
+{
+	double returnvalue = (kp*(ek+(T/TN)*sum));
+	sum = sum+ek;
+	return returnvalue;
+}
+
 #define TEST_TASK_PRIORITY (tskIDLE_PRIORITY | portPRIVILEGE_BIT)
-
-
 
 /** @brief main function, entry point of the application */
 void main (void)
@@ -107,12 +119,12 @@ void main (void)
   xTaskCreate( (pdTASK_CODE)test_task3, 	"test3", configMINIMAL_STACK_SIZE, 0, TEST_TASK_PRIORITY+8, NULL);
   //xTaskCreate( (pdTASK_CODE)bargraph_task, 	"bar",   configMINIMAL_STACK_SIZE, 0, TEST_TASK_PRIORITY+2, NULL);
   //xTaskCreate( (pdTASK_CODE)scope_task,		"scope" ,configMINIMAL_STACK_SIZE+128, 0, TEST_TASK_PRIORITY+7, NULL);
-  xTaskCreate( (pdTASK_CODE)uart_task, 		"uart",  configMINIMAL_STACK_SIZE, 0, TEST_TASK_PRIORITY+7, NULL);
+  xTaskCreate( (pdTASK_CODE)uart_can_send_task, 		"uart_can_send",  configMINIMAL_STACK_SIZE, 0, TEST_TASK_PRIORITY+7, NULL);
   xTaskCreate( (pdTASK_CODE)pushbutton_task,	"button",configMINIMAL_STACK_SIZE+128, 0, TEST_TASK_PRIORITY+7, NULL);
 
   can = new can_driver_t( 3);
 
-  xTaskCreate( (pdTASK_CODE)can_receive_task, 		"uart",  configMINIMAL_STACK_SIZE, 0, TEST_TASK_PRIORITY+7, NULL);
+  xTaskCreate( (pdTASK_CODE)can_receive_task, 		"can_receive",  configMINIMAL_STACK_SIZE, 0, TEST_TASK_PRIORITY+7, NULL);
 
   vTaskStartScheduler ();
 }
